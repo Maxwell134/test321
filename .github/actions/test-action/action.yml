@@ -1,0 +1,14 @@
+# .github/actions/hello/action.yml
+name: 'Hello'
+
+description: 'Prints a greeting'
+
+inputs:
+  name:
+    description: 'Name for the greeting'
+    required: true
+
+# runs:
+#   using: 'docker'
+#   image: 'alpine:3.14'
+#   entrypoint: '/entrypoint.sh'
