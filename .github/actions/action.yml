@@ -9,7 +9,7 @@ inputs:
     required: true
     type: string
 
+
 runs:
   using: 'docker'
-  image: 'alpine:3.14'
-  entrypoint: '/entrypoint.sh'
+  image: 'Dockerfile'
