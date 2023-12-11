@@ -1,0 +1,15 @@
+# .github/actions/test-my-name/action.yml
+name: 'Test my name'
+
+description: 'This is testing'
+
+inputs:
+  name:
+    description: 'The name for the greeting'
+    required: true
+    type: string
+
+runs:
+  using: 'docker'
+  image: 'alpine:3.14'
+  entrypoint: '/entrypoint.sh'
