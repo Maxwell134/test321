@@ -12,6 +12,7 @@ inputs:
     required: true
 runs:
   using: 'composite'
+  shell: bash
   steps:
     - name: Set up Docker CLI
       run: |
