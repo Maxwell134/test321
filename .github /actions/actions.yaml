@@ -1,9 +1,0 @@
-name: 'Test my name'
-
-description: 'This is testing'
-
-inputs:
-  name:
-    description: 'The name for the greeting'
-    required: true
-    type: string
