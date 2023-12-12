@@ -16,12 +16,13 @@ jobs:
 
 
       - name: docker login
-        uses: Maxwell134/test321/.github/actions/login@main
-        with:
+        run: docker login -u {{ secrets.DOCKERHUB_USERNAME }} -p { secrets.DOCKERHUB_PASSWORD }}
+        # uses: Maxwell134/test321/.github/actions/login@main
+        # with:
 
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          registry: docker.io
+          # username: ${{ secrets.DOCKERHUB_USERNAME }}
+          # password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          # registry: docker.io
 
       - name: check images 
         run: docker images 
