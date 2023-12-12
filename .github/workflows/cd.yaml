@@ -14,6 +14,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: check images 
+        run: docker images 
+
+      - name: pull images
+        run: docker pull my_life
+
       - name: Start Docker container
         run: docker run -itd -p 80:80 my_life  # Replace 'my_life' with your actual Docker image
 
