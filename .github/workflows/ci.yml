@@ -24,8 +24,8 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v3
 
-            - name: Build Docker image
-              run:  docker build - t ${{ github.event.inputs.docker_image }}:${{github.sha}} .
+            - name: Docker pull
+              run:  docker pull ${{ github.event.inputs.docker_image }}:${{ github.event.inputs.docker_image }}
 
             - name: Import credentials 
               uses: Maxwell134/Docker_login_actions@main
