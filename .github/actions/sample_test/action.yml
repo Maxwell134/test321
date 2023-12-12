@@ -1,0 +1,13 @@
+name: 'Simple Hello Action'
+description: 'Prints a greeting with a customizable name'
+
+inputs:
+  myName:
+    description: 'The name for the greeting'
+    required: true
+
+runs-on: ubuntu-latest
+
+steps:
+  - name: Run Simple Hello Action
+    run: echo "Hello, ${{ inputs.myName }}"
