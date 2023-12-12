@@ -16,7 +16,7 @@ jobs:
 
 
       - name: docker login
-        run: docker login -u {{ secrets.DOCKERHUB_USERNAME }} -p { secrets.DOCKERHUB_PASSWORD }}
+        run: docker login -u {{ secrets.DOCKERHUB_USERNAME }} -p {{ secrets.DOCKERHUB_PASSWORD }}
         # uses: Maxwell134/test321/.github/actions/login@main
         # with:
 
