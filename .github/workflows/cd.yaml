@@ -12,11 +12,11 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
 
       - name: docker login
-        uses: Maxwell134/Docker_login_actions/.github/actions/login@main
+        uses: Maxwell134/test321/.github/actions/login@main
         with:
 
           username: ${{ secrets.DOCKER_USERNAME }}
