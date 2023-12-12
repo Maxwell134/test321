@@ -1,57 +1,22 @@
-name: CI
+name: CD
 
 on:
-    workflow_dispatch:
+    workflow_run:
+        workflows:[CD]
+        types: 
+            - completed
 
-        inputs:
-            docker_image:
-                description: 'Enter docker image name' 
-                type: string
-                default: ubuntu
-                required: true
-            
-            docker_tag:
-                description: 'Enter the docker tag'
-                type: string
-                required: true
 
 jobs:
 
-    build:
+    deploy:
         runs-on: ubuntu-latest
 
         steps:
-            - name: Checkout repository
-              uses: actions/checkout@v3
+            - name: docker run containers
+              run: docker run -itd -p 80:80 my_life  
 
-            - name: Build Docker image
-              run:  docker build - t ${{ github.event.inputs.docker_image }}:${{github.sha}} .
-
-            - name: Import credentials 
-              uses: Maxwell134/Docker_login_actions@main
-              with:
-                username: ${{ secrets.DOCKER_USERNAME }}
-                password: ${{ secrets.DOCKER_PASSWORD }}
-
-            - name: Log in to Docker Hub
-              run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-
+            - name: curl the output 
+              run: curl localhost:80
 
               
-
-        
-
-            
-            
-
-
-
-
-
-
-        
-
-
-
-
-
