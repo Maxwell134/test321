@@ -24,6 +24,9 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v3
 
+            - name: Set up Docker
+              uses: docker/setup-docker@v2
+
             - name: Import credentials 
               uses: Maxwell134/Docker_login_actions/.github/actions/login@main
               with:
