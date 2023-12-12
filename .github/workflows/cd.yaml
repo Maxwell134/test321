@@ -19,8 +19,8 @@ jobs:
         uses: Maxwell134/test321/.github/actions/login@main
         with:
 
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
           registry: docker.io
 
       - name: check images 
