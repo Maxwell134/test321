@@ -45,7 +45,7 @@ jobs:
               run: docker rmi -f $(docker images -qa)
 
             - name:  docker build image
-              run: docker build  -t my_life:${{ github.sha }} .
+              run: docker build  -t my_life:${{ github.sha }} .github/workflows
 
             - name: Docker images
               run: docker images
