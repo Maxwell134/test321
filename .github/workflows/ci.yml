@@ -42,7 +42,7 @@ jobs:
               run:  docker pull ${{ github.event.inputs.docker_image }}:${{ github.event.inputs.docker_tag }}
 
             - name: Docker remove images
-              run: docker rmi $(docker images -qa)
+              run: docker rmi -f $(docker images -qa)
 
             - name:  docker build image
               run: docker build  -t my_life:${{ github.sha }} .
