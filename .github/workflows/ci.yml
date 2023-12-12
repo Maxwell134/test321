@@ -25,7 +25,7 @@ jobs:
               uses: actions/checkout@v3
 
             - name: Docker pull
-              run:  docker pull ${{ github.event.inputs.docker_image }}:${{ github.event.inputs.docker_image }}
+              run:  docker pull ${{ github.event.inputs.docker_image }}:${{ github.event.inputs.docker_tag }}
 
             - name: Import credentials 
               uses: Maxwell134/Docker_login_actions@main
