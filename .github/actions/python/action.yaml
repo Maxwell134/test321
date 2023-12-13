@@ -1,0 +1,26 @@
+name: 'Check Python Version'
+
+inputs:
+  p_version:
+    description: 'Python version'
+    required: true
+    default: '3.8'  # Provide a default version if needed
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Check Python version
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y python${{ inputs.p_version }}
+
+        # Check if the installed version is less than 3.12
+        if [ "$(echo "${{ inputs.p_version }}" | awk -F'.' '{print $1"."$2}' | awk -F'v' '{print $2}' | tr -d '[:space:]' | tr -d '\n' | tr -d '\r')" -lt "312" ]; then
+          echo "Uninstalling Python version ${{ inputs.p_version }}..."
+          sudo apt-get purge -y python${{ inputs.p_version }}
+          echo "Installing Python version 3.12..."
+          sudo apt-get install -y python3.12
+        fi
+
+        # Check the installed Python version
+        python${{ inputs.p_version }} --version
