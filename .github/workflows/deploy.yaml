@@ -16,7 +16,6 @@ jobs:
 
     outputs:
       id: docker
-      set: ${{ steps.set_output.outputs }}
 
     steps:
       - name: Checkout repository
@@ -25,28 +24,24 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
-      - name: Build Docker image
-        id: set_output
+      - name: Set environment variables
         run: |
-          echo "::set-output name=image_name::${{ inputs.image_name }}"
-          echo "::set-output name=image_tag::${{ inputs.image_tag }}"
-          docker buildx build -t "${{ inputs.image_name }}:${{ inputs.image_tag }}" .
+          echo "IMAGE_NAME=${{ inputs.image_name }}" >> $GITHUB_ENV
+          echo "IMAGE_TAG=${{ inputs.image_tag }}" >> $GITHUB_ENV
+
+      - name: Build Docker image
+        run: docker buildx build -t "${{ inputs.image_name }}:${{ inputs.image_tag }}" .
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
 
-    outputs:
-      
-      image_name: ${{ needs.build.outputs.image_name }}
-      image_tag: ${{ needs.build.outputs.image_tag }}
-
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       - name: Log in to Docker Hub
         run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
 
       - name: Push Docker image
-        run: docker push "${{ inputs.image_name }}:${{ inputs.image_tag }}"
+        run: docker push "${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}"
