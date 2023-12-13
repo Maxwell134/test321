@@ -7,8 +7,9 @@ inputs:
     default: '3.8'  # Provide a default version if needed
 
 runs:
-  using: 'composite'
-  shell: bash  # Placeholder value to work around the issue
+  using: 'bash'
+  shell: bash
+  working-directory: ${{ github.workspace }}
   steps:
     - name: Check Python version
-      run: Maxwell134/test321/actions/python/entrypoint.sh
+      run: Maxwell134/test321/.github/actions/python/entrypoint.sh ${{ inputs.p_version }}
