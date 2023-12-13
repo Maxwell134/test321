@@ -15,9 +15,9 @@ jobs:
   install_python:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        python_version: ['3.8', '3.9', '3.10']
+    # strategy:
+    #   matrix:
+    #     python_version: ['3.8', '3.9', '3.10']
 
     steps:
       - name: Checkout repository
