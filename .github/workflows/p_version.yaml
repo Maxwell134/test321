@@ -21,7 +21,7 @@ jobs:
       - name: bash check
         run: bash --version
 
-      # - name: Install Python
-      #   uses: Maxwell134/test321/.github/actions/python@main
-      #   with:
-      #     python_version: ${{ matrix.python_version }}
+      - name: Install Python
+        uses: Maxwell134/test321/.github/actions/python@main
+        with:
+          python_version: ${{ matrix.python_version }}
