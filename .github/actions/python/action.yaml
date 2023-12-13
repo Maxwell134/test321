@@ -2,9 +2,8 @@ name: python version
 description: ''
 
 inputs:
-    name: p version
+    name: p_version
     required: true
-    type: string
     default: '3.8'
 
 runs:
