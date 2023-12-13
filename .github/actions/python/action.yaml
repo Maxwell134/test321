@@ -27,8 +27,11 @@ runs:
           sudo apt-get install -y python${{ inputs.python_version }}
         # rm -rf /var/lib/apt/lists/*
 
+         
+         sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.9 1
+         sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.9 1
          python3 --version && python3 -c "import sys; print(sys.version)"
-         python --version
+        
 
         echo "Python installed successfully"
 
