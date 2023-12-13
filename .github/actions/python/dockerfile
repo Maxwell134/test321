@@ -1,12 +1,6 @@
 FROM ubuntu:latest
 
-ARG PYTHON_VERSION
 
-# Set the environment variable to avoid debconf issues
-ENV DEBIAN_FRONTEND=noninteractive
-
-RUN apt-get update && \
-    apt-get install -y python${PYTHON_VERSION} && \
-    rm -rf /var/lib/apt/lists/*
-
+RUN apt-get update 
+    
 CMD ["python3", "--version"]
