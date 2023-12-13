@@ -1,15 +1,22 @@
-name: 'Check Python Version'
+name: python version
+description: ''
 
 inputs:
-  p_version:
-    description: 'Python version'
+    name: p version
     required: true
-    default: '3.8'  # Provide a default version if needed
+    type: string
+    default: '3.8'
 
 runs:
-  using: 'bash'
-  shell: bash
-  working-directory: ${{ github.workspace }}
-  steps:
-    - name: Check Python version
-      run: Maxwell134/test321/.github/actions/python/entrypoint.sh ${{ inputs.p_version }}
+    using: 'docker'
+    image: dockerfile
+
+branding:
+    icon: 'check'
+    color: 'green'
+
+
+
+    
+
+
