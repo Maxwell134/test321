@@ -12,6 +12,7 @@ runs:
   
   steps:
     - name: Install Python
+      shell: bash 
       run: |
         set -e
 
