@@ -1,12 +1,9 @@
-name: Example Workflow
+name: Check Python Version Workflow
 
 on:
-  workflow_dispatch:
-    inputs:
-      p_version:
-        description: 'Python version'
-        required: true
-        default: '3.8'  # Provide a default version if needed
+  push:
+    branches:
+      - main
 
 jobs:
   check_python_version:
@@ -14,13 +11,9 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2  
+        uses: actions/checkout@v3
 
-      - name: Check Python version
-        uses: Maxwell134/test321/.github/actions/python@main
+      - name: Run Python Version Checker Action
+        uses: Maxwell134/test321/.github/action/python@main
         with:
-          p_version: ${{ github.event.inputs.p_version }}
-
-
-      - name: permision to script
-        run: chmod + Maxwell134/test321/.github/actions/python/entrypoint.sh
+          p_version: '3.10'  # Specify the desired Python version
