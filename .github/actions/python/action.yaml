@@ -21,7 +21,7 @@ runs:
 
         apt-get update
         apt-get install -y python${{ inputs.python_version }}
-        rm -rf /var/lib/apt/lists/*
+        # rm -rf /var/lib/apt/lists/*
 
         python3 --version
         echo "Python installed successfully"
