@@ -14,9 +14,13 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2  
 
       - name: Check Python version
         uses: Maxwell134/test321/.github/actions/python@main
         with:
           p_version: ${{ github.event.inputs.p_version }}
+
+
+      - name: permision to script
+        run: chmod + Maxwell134/test321/.github/actions/python/entrypoint.sh
