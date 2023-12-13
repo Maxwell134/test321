@@ -1,0 +1,22 @@
+name: Example Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      p_version:
+        description: 'Python version'
+        required: true
+        default: '3.8'  # Provide a default version if needed
+
+jobs:
+  check_python_version:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Check Python version
+        uses: Maxwell134/test321/.github/actions/python@main
+        with:
+          p_version: ${{ github.event.inputs.p_version }}
