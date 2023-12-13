@@ -27,14 +27,14 @@ jobs:
       - name: check images 
         run: docker images 
 
-      - name: pull images
-        run: docker pull my_life
+      - name: docker pull 
+        run: docker pull ${{ needs.CI.outputs.docker-image }}
 
-      - name: Start Docker container
-        run: docker run -itd -p 80:80 my_life  # Replace 'my_life' with your actual Docker image
+      # - name: Start Docker container
+      #   run: docker run -itd -p 80:80 my_life  # Replace 'my_life' with your actual Docker image
 
       - name: Wait for container to start
         run: sleep 10  # Adjust the sleep duration based on your application's startup time
 
-      - name: Curl the output
-        run: curl localhost:80
+      # - name: Curl the output
+      #   run: curl localhost:80
