@@ -1,7 +1,9 @@
 FROM ubuntu:latest
 
+ARG PYTHON_VERSION
+
 RUN apt-get update \
-    && apt-get install -y python3 \
+    && apt-get install -y python${PYTHON_VERSION} \
     && rm -rf /var/lib/apt/lists/*
 
 CMD ["python3", "--version"]
