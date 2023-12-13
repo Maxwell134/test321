@@ -7,7 +7,8 @@ inputs:
     default: '3.8'
 
 runs:
-  using: 'composite'
+  using: composite
+  shell: bash
   
   steps:
     - name: Install Python
@@ -24,4 +25,4 @@ runs:
         python3 --version
         echo "Python installed successfully"
 
-    shell: bash
+    
