@@ -29,4 +29,4 @@ jobs:
       - name: Install Python
         uses: Maxwell134/test321/.github/actions/python@main
         with:
-          python_version: ${{ github.event.inputs.python_version || matrix.python_version }}
+          python_version: ${{ github.event.inputs.python_version }}
