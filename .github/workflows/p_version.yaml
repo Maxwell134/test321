@@ -14,6 +14,6 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Run Python Version Checker Action
-        uses: Maxwell134/test321/.github/action/python@main
+        uses: Maxwell134/test321/.github/actions/python@main
         with:
           p_version: '3.10'  # Specify the desired Python version
