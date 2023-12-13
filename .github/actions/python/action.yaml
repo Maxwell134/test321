@@ -1,21 +1,15 @@
-name: python version
-description: ''
+name: 'Python Version Checker'
 
 inputs:
-    name: p_version
+  p_version:
+    description: 'Python version to install'
     required: true
     default: '3.8'
 
 runs:
-    using: 'docker'
-    image: dockerfile
+  using: 'docker'
+  image: Dockerfile
 
 branding:
-    icon: 'check'
-    color: 'green'
-
-
-
-    
-
-
+  icon: 'check'
+  color: 'green'
