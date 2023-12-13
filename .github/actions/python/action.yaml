@@ -7,8 +7,7 @@ inputs:
     default: '3.8'  # Provide a default version if needed
 
 runs:
-  using: 'composite'
-  shell: 'bash'
+  using: 'composite' 
   steps:
     - name: Check Python version
       run: |
