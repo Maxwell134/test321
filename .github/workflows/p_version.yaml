@@ -29,8 +29,8 @@ jobs:
       - name: Setup Python ${{ env.VERSION }}
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ env.VERSION }}
-          architecture: ${{ matrix.arch }}
+          python-version: 3.9
+          architecture: 'x64'
 
       # - name: Install Python
       #   uses: Maxwell134/test321/.github/actions/python@main
