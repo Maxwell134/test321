@@ -20,6 +20,7 @@ runs:
         export DEBIAN_FRONTEND=noninteractive
 
         sudo apt-get update
+        sudo apt-get purge python3
         sudo apt-get install -y python${{ inputs.python_version }}
         # rm -rf /var/lib/apt/lists/*
 
