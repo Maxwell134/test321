@@ -1,0 +1,43 @@
+<<<<<<< HEAD
+=======
+name: CD
+
+on:
+  workflow_run:
+    workflows: [CI]  # Assuming CI is the name of your CI workflow
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+
+      - name: docker login
+        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+        # uses: Maxwell134/test321/.github/actions/login@main
+        # with:
+
+          # username: ${{ secrets.DOCKERHUB_USERNAME }}
+          # password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          # registry: docker.io
+
+      - name: check images 
+        run: docker images 
+
+      - name: docker pull 
+        run: docker pull ${{ needs.CI.outputs.docker_image }}:${{ needs.CI.outputs.docker_tag }}
+
+      # - name: Start Docker container
+      #   run: docker run -itd -p 80:80 my_life  # Replace 'my_life' with your actual Docker image
+
+      - name: Wait for container to start
+        run: sleep 10  # Adjust the sleep duration based on your application's startup time
+
+      # - name: Curl the output
+      #   run: curl localhost:80
+>>>>>>> a1fcf620dd5540be368b0b4a8e557449e9f37bed
