@@ -28,7 +28,7 @@ jobs:
         run: docker images 
 
       - name: docker pull 
-        run: docker pull ${{ needs.ci.outputs.docker_image }}:${{ needs.ci.outputs.docker_tag }}
+        run: docker pull ${{ needs.CI.outputs.docker_image }}:${{ needs.CI.outputs.docker_tag }}
 
       # - name: Start Docker container
       #   run: docker run -itd -p 80:80 my_life  # Replace 'my_life' with your actual Docker image
