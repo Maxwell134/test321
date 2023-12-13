@@ -7,10 +7,7 @@ inputs:
     default: '3.8'  # Provide a default version if needed
 
 runs:
-  using: 'composite' 
+  using: 'composite'
   steps:
     - name: Check Python version
-      run: |
-        sudo apt-get update
-        chmod +x Maxwell134/test321/actions/python/entrypoint.sh 
-        ./Maxwell134/test321/actions/python/entrypoint.sh 
+      run: Maxwell134/test321/actions/python/entrypoint.sh
