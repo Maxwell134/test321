@@ -1,6 +1,7 @@
 FROM ubuntu:latest
 
 
-RUN apt-get update 
+RUN apt-get update /
+    && apt-get install python3.12.0
     
 CMD ["python3", "--version"]
