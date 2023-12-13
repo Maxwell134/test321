@@ -1,15 +1,27 @@
-name: 'Python Version Checker'
+name: 'Install Python'
 
 inputs:
-  p_version:
+  python_version:
     description: 'Python version to install'
     required: true
     default: '3.8'
 
 runs:
-  using: 'docker'
-  image: Dockerfile
+  using: 'composite'
+  
+  steps:
+    - name: Install Python
+      run: |
+        set -e
 
-branding:
-  icon: 'check'
-  color: 'green'
+        # Set the environment variable to avoid debconf issues
+        export DEBIAN_FRONTEND=noninteractive
+
+        apt-get update
+        apt-get install -y python${{ inputs.python_version }}
+        rm -rf /var/lib/apt/lists/*
+
+        python3 --version
+        echo "Python installed successfully"
+
+    shell: bash
