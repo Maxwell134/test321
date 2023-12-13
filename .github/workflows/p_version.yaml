@@ -33,6 +33,6 @@ jobs:
       #     architecture: 'x64'
 
       - name: Install Python
-        uses: Maxwell134/test321/.github/actions/python@main
+        uses: Maxwell134/test321/.github/actions/python@v1.0.0
         with:
           python_version: ${{ github.event.inputs.python_version }}
