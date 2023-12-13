@@ -8,6 +8,7 @@ inputs:
 
 runs:
   using: 'composite'
+  shell: bash  # Placeholder value to work around the issue
   steps:
     - name: Check Python version
       run: Maxwell134/test321/actions/python/entrypoint.sh
