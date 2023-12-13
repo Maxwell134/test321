@@ -26,13 +26,13 @@ jobs:
       - name: bash check
         run: bash --version
 
-      - name: Setup Python ${{ env.VERSION }}
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.9
-          architecture: 'x64'
-
-      # - name: Install Python
-      #   uses: Maxwell134/test321/.github/actions/python@main
+      # - name: Setup Python ${{ env.VERSION }}
+      #   uses: actions/setup-python@v4
       #   with:
-      #     python_version: ${{ github.event.inputs.python_version }}
+      #     python-version: 3.9
+      #     architecture: 'x64'
+
+      - name: Install Python
+        uses: Maxwell134/test321/.github/actions/python@main
+        with:
+          python_version: ${{ github.event.inputs.python_version }}
