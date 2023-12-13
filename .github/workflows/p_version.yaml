@@ -1,4 +1,4 @@
-name: Check Python Version Workflow
+name: Install Python Workflow
 
 on:
   push:
@@ -6,20 +6,18 @@ on:
       - main
 
 jobs:
-  check_python_version:
+  install_python:
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python_version: ['3.8', '3.9', '3.10']
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
-      - name: Run Python Version Checker Action
+      - name: Install Python
         uses: Maxwell134/test321/.github/actions/python@main
         with:
-          p_version: '3.10'  # Specify the desired Python version
-
-      - name: install
-        run: |
-            sudo apt-get install python3.9
-            python3 --version
-        
+          python_version: ${{ matrix.python_version }}
