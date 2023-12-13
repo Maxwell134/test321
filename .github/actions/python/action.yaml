@@ -19,8 +19,8 @@ runs:
         # Set the environment variable to avoid debconf issues
         export DEBIAN_FRONTEND=noninteractive
 
-        apt-get update
-        apt-get install -y python${{ inputs.python_version }}
+        sudo apt-get update
+        sudo apt-get install -y python${{ inputs.python_version }}
         # rm -rf /var/lib/apt/lists/*
 
         python3 --version
