@@ -12,8 +12,7 @@ def find_employee(employee_id, employee):
 
 def main():
     try:
-        prompt = os.environ.get('PROMPT', 3).lower()
-        prompt_timeout = inputimeout(timeout=prompt).lower()
+        prompt = os.environ.get('PROMPT', '').lower()
         
         if prompt == 'yes':
             employee_id = ['001', '002', '003', '004', '005']
