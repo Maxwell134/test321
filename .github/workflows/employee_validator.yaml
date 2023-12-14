@@ -52,5 +52,5 @@ jobs:
 
       - name: Hello step
         if: success()  # This step will run only if the previous step (Print result) was successful
-        run: echo " Success moved"
+        
         run: echo "Hello! This is the 'hello' step."
