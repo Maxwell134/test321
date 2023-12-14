@@ -1,0 +1,19 @@
+name: check employee
+
+on:
+  workflow_dispatch
+
+jobs:
+  check_employee:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Run check employee
+        id: check_employee
+        run: python3 test.py
+
+      - name: Print result
+        run: echo "${{ steps.check_employee.outputs.result }}"
