@@ -11,7 +11,7 @@ on:
       prompt:
         description: 'Enter yes or no'
         required: true
-        type: boolean   
+        type: string
 
 jobs:
   check_employee:
