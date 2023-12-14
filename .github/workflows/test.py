@@ -18,6 +18,8 @@ def main():
 
             result = find_employee(employee_id, employee_input)
             print(result)
+            print(f"::set-output name=result::{result}")
+            
         elif prompt == 'no':
             print('Exiting')
         else:
