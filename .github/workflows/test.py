@@ -15,6 +15,7 @@ def main():
     employee_id = ['001', '002', '003', '004', '005']
     result = employee_exists(employee_id, employee)
     print(result)
+    print(f"::set-output name=result::{result}")
 
 if __name__ == '__main__':
     main()
