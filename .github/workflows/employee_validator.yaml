@@ -1,9 +1,11 @@
-name: check employee
+name: Check Employee
+
 on:
   workflow_dispatch:
     inputs:
       emp_name: 
-        description: ''
+        description: 'Employee name to check'
+        required: true
         type: string
 
 jobs:
@@ -14,11 +16,19 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.10
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt  # If you have any dependencies
+
       - name: Run check employee
         id: check_employee
         run: python3 -u ${{ github.workspace }}/.github/workflows/test.py
-        
-        
         env:
           employee: ${{ github.event.inputs.emp_name }}
 
