@@ -1,5 +1,6 @@
 from datetime import datetime
 import os
+from inputimeout import inputimeout, TimeoutOccurred
 
 def find_employee(employee_id, employee):
     if employee in employee_id:
@@ -11,7 +12,9 @@ def find_employee(employee_id, employee):
 
 def main():
     try:
-        prompt = os.environ.get('PROMPT', '').lower()
+        prompt = os.environ.get('PROMPT', 3).lower()
+        prompt_timeout = inputimeout(timeout=prompt).lower()
+        
         if prompt == 'yes':
             employee_id = ['001', '002', '003', '004', '005']
             employee_input = os.environ.get('employee', '')
