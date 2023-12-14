@@ -34,4 +34,8 @@ jobs:
             echo "Error: Result is not 'Found'. Exiting."
             exit 1
           fi
+          
+      - name: Hello step
+        if: success()  # This step will run only if the previous step (Print result) was successful
+        run: echo "Hello! This is the 'hello' step."
 
