@@ -12,6 +12,7 @@ on:
         description: 'Enter yes or no'
         required: true
         type: string
+        
 
       # test-timeout:
       #   required: false
@@ -21,6 +22,7 @@ on:
 jobs:
   check_employee:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
   
     steps:
       - name: Checkout repo
@@ -31,8 +33,7 @@ jobs:
 
       - name: Run check employee
         id: check_employee
-        timeout-minutes: 1
-        
+          
         run: python3 -u ${{ github.workspace }}/.github/workflows/test.py
         env:
           employee: ${{ github.event.inputs.emp_name }}
