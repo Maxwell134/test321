@@ -18,7 +18,7 @@ def main():
             sleep(1)
 
         if prompt == 'yes':
-            employee_id = ['001', '002', '003', '004', '005']
+            employee_id = ['001', '002', '003', '004', '005', 'Maxwell134']
             employee_input = os.environ.get('employee', '')
 
             result = find_employee(employee_id, employee_input)
