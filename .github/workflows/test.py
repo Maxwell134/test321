@@ -4,7 +4,7 @@ from inputimeout import inputimeout, TimeoutOccurred
 from time import sleep  # Import the sleep function
 
 def find_employee(employee_id, employee):
-    if employee in employee_id:
+    if employee == github.actor:
         current_time = datetime.now().strftime('%I:%M:%S %p')
         print('current_time:', current_time)
         print(f'Employee: {employee} exists in the list')
