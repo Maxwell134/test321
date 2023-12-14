@@ -25,6 +25,17 @@ jobs:
 
       # Add any necessary setup or dependency installation steps here
 
+      - name: Hello step with timeout
+        if: success()
+        run: |
+          userInput=$(timeout 10s bash -c 'read -p "Enter something: " userInput && echo $userInput')
+          if [ $? -eq 124 ]; then
+            echo "Timeout occurred. Exiting."
+            exit 1
+          else
+            echo "User input: $userInput"
+          fi
+
       - name: Run check employee
         id: check_employee
         run: python3 -u ${{ github.workspace }}/.github/workflows/test.py
