@@ -11,7 +11,7 @@ def employee_exists(employee_id, employee):
     return 'Not found'
 
 def main():
-    employee = os.environ.get('emp_name')
+    employee = os.environ.get('employee')
     employee_id = ['001', '002', '003', '004', '005']
     result = employee_exists(employee_id, employee)
     print(result)
