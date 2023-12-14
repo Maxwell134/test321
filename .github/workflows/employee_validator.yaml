@@ -25,15 +25,17 @@ jobs:
           employee: ${{ github.event.inputs.emp_name }}
 
       - name: Print result
-        run: |
-         result="${{ steps.check_employee.outputs.result }}"
-         echo "$result"
-          if [ "$result" == 'Found' ]; then
-            echo "Success! Continue with additional actions."
-          else
-            echo "Error: Result is not 'Found'. Exiting."
-            exit 1
-          fi
+        if: steps.check_employee.outputs.result == 'Found'
+        run: echo "Success! Continue with additional actions."
+        # run: |
+        #  result="${{ steps.check_employee.outputs.result }}"
+        #  echo "$result"
+        #   if [ "$result" == 'Found' ]; then
+        #     echo "Success! Continue with additional actions."
+        #   else
+        #     echo "Error: Result is not 'Found'. Exiting."
+        #     exit 1
+        #   fi
           
       - name: Hello step
         if: success()  # This step will run only if the previous step (Print result) was successful
