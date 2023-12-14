@@ -1,7 +1,10 @@
 name: check employee
-
 on:
-  workflow_dispatch
+  workflow_dispatch:
+    inputs:
+      emp_name: 
+        description: ''
+        type: string
 
 jobs:
   check_employee:
@@ -14,6 +17,8 @@ jobs:
       - name: Run check employee
         id: check_employee
         run: python3 test.py
+        env:
+          employee: ${{ github.event.inputs.emp_name }}
 
       - name: Print result
         run: echo "${{ steps.check_employee.outputs.result }}"
