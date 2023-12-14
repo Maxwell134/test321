@@ -29,7 +29,9 @@ jobs:
         id: check_employee
         run: python3 -u ${{ github.workspace }}/.github/workflows/test.py
         env:
-          employee: ${{ github.event.inputs.emp_name }}
+          employee: ${{ github.event.inputs.emp_name 
+          PROMPT: ${{ github.event.inputs.prompt }}
+          
 
       - name: Print result
         # if: steps.check_employee.outputs.result == 'Found'
