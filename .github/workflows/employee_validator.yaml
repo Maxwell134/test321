@@ -16,6 +16,7 @@ on:
 jobs:
   check_employee:
     runs-on: ubuntu-latest
+    timeout-minutes: 2
 
     steps:
       - name: Checkout repo
@@ -23,18 +24,7 @@ jobs:
       - name: pip install
         run: pip3 install inputimeout
 
-      # Add any necessary setup or dependency installation steps here
-
-      - name: Hello step with timeout
-        if: success()
-        run: |
-          userInput=$(timeout 10s bash -c 'read -p "Enter something: " userInput && echo $userInput')
-          if [ $? -eq 124 ]; then
-            echo "Timeout occurred. Exiting."
-            exit 1
-          else
-            echo "User input: $userInput"
-          fi
+      # Add any necessary setup or dependency installation steps here 
 
       - name: Run check employee
         id: check_employee
