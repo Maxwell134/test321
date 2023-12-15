@@ -14,7 +14,10 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+
+      - name: install pip 
+        run: pip install inputimeout
 
       - name: Set User Input
         id: set_input
