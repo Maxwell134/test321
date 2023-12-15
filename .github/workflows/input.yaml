@@ -1,0 +1,23 @@
+name: Your Workflow
+
+on: [push]
+
+jobs:
+  your_job:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20 # Set the overall job timeout
+    
+    steps:
+      - name: Step 1
+        run: echo "Executing Step 1"
+      
+      - name: Step 2
+        run: echo "Executing Step 2"
+      
+      - name: Input Step
+        id: input_step
+        run: echo "Executing Input Step"
+      
+      - name: Final Step
+        if: ${{ needs.your_job.outputs.input_step == 'true' }}
+        run: echo "Executing Final Step"
