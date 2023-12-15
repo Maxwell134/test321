@@ -1,44 +1,21 @@
-name: Two Jobs Workflow
+name: GitHub Actions with Python Input
 
 on:
   workflow_dispatch:
     inputs:
-      job1_input:
-        description: 'Input for Job 1'
-        required: true
-        type: string
-      job2_input:
-        description: 'Input for Job 2'
+      user_input:
+        description: 'Enter something'
         required: true
         type: string
 
 jobs:
-  job1:
+  python_job:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Set User Input
+        id: set_input
+        run: echo "::set-output name=user_input::${{ github.event.inputs.user_input }}"
 
-      - name: Run Job 1
-        id: job1
-        run: |
-          echo "Job 1 input: ${{ github.event.inputs.job1_input }}"
-          echo "::set-output name=job1_output::Job 1 completed"
-
-  job2:
-    needs: job1
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Run Job 2
-        id: job2
-        run: |
-          echo "Job 2 input: ${{ github.event.inputs.job2_input }}"
-          echo "::set-output name=job2_output::Job 2 completed"
-
-      - name: Print Combined Output
-        run: echo "Combined Output:${{ needs.job1.outputs.job1_output }}, ${{ needs.job2.outputs.job2_output }}"
+      - name: Run Python Script
+        run: python3 {{github.workspace}}/.github/workflows/script.py ${{ steps.set_input.outputs.user_input }}
