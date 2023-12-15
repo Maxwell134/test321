@@ -46,7 +46,10 @@ jobs:
       - name: Print result
         run: |
           result="${{ steps.check_employee.outputs.result }}"
+          github_actors="${{ steps.check_employee.outputs.github_actors }}"
           echo "$result"
+          echo "GitHub Actors: $github_actors"
+      
           if [ "$result" == 'Found' ]; then
             echo "Success! Continue with additional actions."
           else
