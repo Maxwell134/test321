@@ -1,6 +1,6 @@
 name: Your Workflow
 
-on: [push]
+on: [workflow_dispatch]
 
 jobs:
   your_job:
