@@ -1,31 +1,29 @@
-name: GitHub Actions with Input Timeout
+name: Check GitHub Users
 
 on:
-  workflow_dispatch:
-    inputs:
-      user_input:
-        description: 'Enter something'
-        required: true
-        type: string
+  push:
+    branches:
+      - main
 
 jobs:
-  timeout_job:
+  check-users:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Set Timeout Duration
-        id: set_timeout
-        run: echo "::set-output name=timeout_duration::60"  # Set the timeout duration in seconds
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Set User Input
-        id: set_input
-        run: echo "::set-output name=user_input::${{ github.event.inputs.user_input }}"
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: 3.10
 
-      - name: Run Script with Timeout
-        run: |
-          chmod +x ${{ github.workspace }}/.github/workflows/your_script.sh
-          timeout_duration=${{ steps.set_timeout.outputs.timeout_duration }}
-          user_input="${{ github.event.inputs.user_input }}"
-          
-          # Implement your timeout logic using the 'timeout' command or other mechanisms
-          timeout $timeout_duration ${{ github.workspace }}/.github/workflows/./your_script.sh "$user_input" || echo "Timeout occurred"
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests
+
+    - name: Check GitHub Users
+      run: python3 -u ${{ github.workspace }}/.github/workflows/script.py
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
