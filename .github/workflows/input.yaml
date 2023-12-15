@@ -17,8 +17,8 @@ jobs:
       - name: User Input Step
         id: user_input
         run: |
-          read -p "Do you want to proceed? (yes/no): " USER_RESPONSE
-          echo "::set-output name=user_response::${USER_RESPONSE}"
+          echo "Do you want to proceed? (yes/no): "
+          echo "::set-env name=USER_RESPONSE::$(cat)"
       
       - name: Final Step
         if: ${{ needs.your_job.outputs.user_input == 'yes' }}
