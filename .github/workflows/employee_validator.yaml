@@ -41,6 +41,7 @@ jobs:
         env:
           employee: ${{ github.actor }}
           PROMPT: ${{ github.event.inputs.prompt }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Print result
         run: |
