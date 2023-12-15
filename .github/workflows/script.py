@@ -1,32 +1,35 @@
 import os
 import requests
 
-def get_repository_interactions(owner, repo):
-    url = f'https://api.github.com/repos/{owner}/{repo}/events'
-    headers = {'Authorization': f'token {os.getenv("GITHUB_TOKEN")}'}
-    response = requests.get(url, headers=headers)
-    return response.json()
+def get_collaborators(repo_owner, repo_name, github_token):
+    collaborators_url = f'https://api.github.com/repos/{repo_owner}/{repo_name}/collaborators'
+    headers = {'Authorization': f'token {github_token}'}
+    
+    response = requests.get(collaborators_url, headers=headers)
+    response.raise_for_status()  # Raise an exception for bad responses
+    
+    collaborators = response.json()
+    return [collaborator['login'] for collaborator in collaborators]
 
 def main():
-    owner = 'Maxwell134'
-    repo = 'test321'
-
-    interactions = get_repository_interactions(owner, repo)
-
-    actors_set = set()
-
-    if interactions:
-        for event in interactions:
-            actor = event.get('actor', {}).get('login')
-            if actor:
-                actors_set.add(actor)
-
-    actors_list = list(actors_set)
-
-    if actors_list:
-        print(f'GitHub actors associated with the repository: {", ".join(actors_list)}')
-    else:
-        print('No GitHub actors found for the repository.')
+    repo_owner = 'Maxwell134'
+    repo_name = 'test321'
+    github_token = os.getenv('GITHUB_TOKEN')
+    
+    if not github_token:
+        print('GitHub token not found.')
+        return
+    
+    try:
+        collaborators = get_collaborators(repo_owner, repo_name, github_token)
+        if collaborators:
+            print('GitHub collaborators:')
+            for collaborator in collaborators:
+                print('-', collaborator)
+        else:
+            print('No collaborators found for the repository.')
+    except Exception as e:
+        print(f'Error: {str(e)}')
 
 if __name__ == '__main__':
     main()
