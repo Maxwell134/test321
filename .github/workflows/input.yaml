@@ -1,11 +1,14 @@
 name: Your Workflow
 
-on: [workflow_dispatch]
+on: [push]
 
 jobs:
   your_job:
     runs-on: ubuntu-latest
     timeout-minutes: 20 # Set the overall job timeout
+    
+    outputs:
+      steps-output: ${{ steps.user_input.outputs.user_response }}
     
     steps:
       - name: Step 1
@@ -18,8 +21,8 @@ jobs:
         id: user_input
         run: |
           echo "Do you want to proceed? (yes/no): "
-          echo "::set-env name=USER_RESPONSE::$(cat)"
+          echo "::set-output name=user_response::$(cat)"
       
       - name: Final Step
-        if: ${{ needs.your_job.outputs.user_input == 'yes' }}
+        if: ${{ needs.your_job.outputs.steps-output == 'yes' }}
         run: python -c "print('Executing Final Step')"
