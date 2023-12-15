@@ -1,9 +1,10 @@
 name: Check GitHub Users
 
 on:
-  push:
-    branches:
-      - main
+  # push:
+  #   branches:
+  #     - main
+  workflow_dispatch
 
 jobs:
   check-users:
