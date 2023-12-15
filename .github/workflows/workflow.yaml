@@ -18,4 +18,4 @@ jobs:
         run: echo "::set-output name=user_input::${{ github.event.inputs.user_input }}"
 
       - name: Run Python Script
-        run: python3 -u ${{ github.workspace }}/.github/workflows/script.py ${{ steps.set_input.outputs.user_input }}
+        run: python3 .github/workflows/script.py ${{ steps.set_input.outputs.user_input }}
