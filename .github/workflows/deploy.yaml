@@ -1,47 +1,19 @@
-name: CI/CD for Docker
+name: Get Collaborators
 
 on:
   workflow_dispatch:
-    inputs:
-      image_name:
-        description: 'Docker image name'
-        required: true
-      image_tag:
-        description: 'Docker image tag'
-        required: true
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    outputs:
-      id: docker
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
-      - name: Set environment variables
-        run: |
-          echo "IMAGE_NAME=${{ inputs.image_name }}" >> $GITHUB_ENV
-          echo "IMAGE_TAG=${{ inputs.image_tag }}" >> $GITHUB_ENV
-
-      - name: Build Docker image
-        run: docker buildx build -t "${{ inputs.image_name }}:${{ inputs.image_tag }}" .
-
-  deploy:
-    needs: build
+  get-collaborators:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Log in to Docker Hub
-        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-
-      - name: Push Docker image
-        run: docker push "${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}"
+    - name: Get Collaborators
+      run: |
+        REPO_OWNER=Maxwell134
+        REPO_NAME=test321
+        GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
+        
+        COLLABORATORS_URL="https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/collaborators"
+        
+        curl -H "Authorization: token $GITHUB_TOKEN" -s $COLLABORATORS_URL | jq '.[].login'
