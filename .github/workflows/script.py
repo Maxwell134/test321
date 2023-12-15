@@ -13,11 +13,20 @@ def main():
 
     interactions = get_repository_interactions(owner, repo)
 
+    actors_set = set()
+
     if interactions:
         for event in interactions:
             actor = event.get('actor', {}).get('login')
             if actor:
-                print(f'GitHub user {actor} interacted with the repository.')
+                actors_set.add(actor)
+
+    actors_list = list(actors_set)
+
+    if actors_list:
+        print(f'GitHub actors associated with the repository: {", ".join(actors_list)}')
+    else:
+        print('No GitHub actors found for the repository.')
 
 if __name__ == '__main__':
     main()
