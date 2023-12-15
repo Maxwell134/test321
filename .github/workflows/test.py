@@ -36,8 +36,8 @@ def main():
             sleep(1)
 
         if prompt == 'yes':
-            repo_owner = 'your-username'
-            repo_name = 'your-repo-name'
+            repo_owner = 'Maxwell134'
+            repo_name = 'test321'
             github_token = os.getenv('GITHUB_TOKEN')
             
             if not github_token:
