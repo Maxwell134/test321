@@ -28,6 +28,9 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
+      - name: Triggered actor 
+        run: echo " Github actor:${{github.actor }}"
+
       - name: pip install
         run: pip3 install inputimeout
 
