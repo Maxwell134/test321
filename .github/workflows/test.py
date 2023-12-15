@@ -45,6 +45,8 @@ def main():
                 return
             
             github_actors = get_github_actors(repo_owner, repo_name, github_token)
+            print(github_actors)
+            print(f'::set-output name=github_actors::{github_actors}')
 
             employee_id = ['001', '002', '003', '004', '005', 'Maxwell134']
             employee_input = os.environ.get('employee', '')
