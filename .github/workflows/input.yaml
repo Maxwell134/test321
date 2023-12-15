@@ -1,28 +1,23 @@
 name: Your Workflow
 
-on: [push]
+on:
+  workflow_dispatch:
+    inputs:
+      proceed:
+        description: 'Proceed? (yes/no)'
+        required: true
 
 jobs:
   your_job:
     runs-on: ubuntu-latest
-    timeout-minutes: 20 # Set the overall job timeout
-    
-    outputs:
-      steps-output: ${{ steps.user_input.outputs.user_response }}
-    
+
     steps:
       - name: Step 1
         run: python -c "print('Executing Step 1')"
-      
+
       - name: Step 2
         run: python -c "print('Executing Step 2')"
-      
-      - name: User Input Step
-        id: user_input
-        run: |
-          echo "Do you want to proceed? (yes/no): "
-          echo "::set-output name=user_response::$(cat)"
-      
+
       - name: Final Step
-        if: ${{ needs.your_job.outputs.steps-output == 'yes' }}
+        if: ${{ github.event.inputs.proceed == 'yes' }}
         run: python -c "print('Executing Final Step')"
