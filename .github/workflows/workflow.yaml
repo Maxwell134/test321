@@ -1,4 +1,4 @@
-name: GitHub Actions with Python Input
+name: GitHub Actions with Input Timeout
 
 on:
   workflow_dispatch:
@@ -9,13 +9,16 @@ on:
         type: string
 
 jobs:
-  python_job:
+  timeout_job:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
       - name: Set User Input
         id: set_input
         run: echo "::set-output name=user_input::${{ github.event.inputs.user_input }}"
 
-      - name: Run Python Script
-        run: python3 .github/workflows/script.py ${{ steps.set_input.outputs.user_input }}
+      - name: Run Python Script with Timeout
+        run: python3 -u ${{ github.workspace }}/.github/workflows/script.py ${{ steps.set_input.outputs.user_input }}
