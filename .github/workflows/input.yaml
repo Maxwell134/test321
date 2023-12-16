@@ -1,4 +1,4 @@
-name: CI/CD Docker Pipeline
+name: Docker Build Workflow
 
 on: [workflow_dispatch]
   # push:
@@ -6,38 +6,21 @@ on: [workflow_dispatch]
   #     - main
 
 jobs:
-  publish_to_registry:
+  build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Read pipeline.json
-        id: read-json
-        run: echo "::set-output name=json::$(cat .github/workflows/pipeline.json)"
+      - name: Get User Input
+        id: get-input
+        run: |
+          comment=$(gh issue view <issue-number> --json body -q .body)
+          echo "::set-output name=comment::$comment"
 
-      # - name: Set up Docker
-      #   uses: actions/setup-docker@v2
-
-      # - name: Log in to Docker Registry
-      #   run: |
-      #     # Extract registry details from JSON
-      #     REGISTRY_URL=$(echo "${{ steps.read-json.outputs.json }}" | jq -r '.registry_url')
-      #     REGISTRY_USERNAME=$(echo "${{ steps.read-json.outputs.json }}" | jq -r '.registry_username')
-      #     REGISTRY_PASSWORD=$(echo "${{ steps.read-json.outputs.json }}" | jq -r '.registry_password')
-
-      #     # Log in to the Docker registry
-      #     echo $REGISTRY_PASSWORD | docker login -u $REGISTRY_USERNAME --password-stdin $REGISTRY_URL
-
-      # - name: Build and Push Docker Image
-      #   run: |
-      #     # Extract information from JSON
-      #     IMAGE_NAME=$(echo "${{ steps.read-json.outputs.json }}" | jq -r '.image_name')
-      #     IMAGE_VERSION=$(echo "${{ steps.read-json.outputs.json }}" | jq -r '.image_version')
-
-      #     # Build Docker image
-      #     docker build -t $IMAGE_NAME:$IMAGE_VERSION .
-
-      #     # Push Docker image to the registry
-      #     docker push $IMAGE_NAME:$IMAGE_VERSION
+      - name: Docker Build
+        if: steps.get-input.outputs.comment == 'yes'
+        run: |
+          # Your Docker build steps go here
+          echo "Building Docker image"
