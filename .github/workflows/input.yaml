@@ -12,11 +12,10 @@ jobs:
       - name: NPM install 
         run: npm install inquirer --save-dev
       - name: Run custom script
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           script: |
-            const inquirer = require('inquirer');
-
+            const inquirer = await import('inquirer');
             async function main() {
               const { proceed } = await inquirer.prompt({
                 type: 'confirm',
