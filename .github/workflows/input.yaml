@@ -9,7 +9,7 @@ jobs:
    steps:
 
     - name: Install inquirer
-      run: npm install inquirer@5.5.3 --save-dev
+      run: npm install inquirer --save-dev
     
     - name: Run custom script with interactive prompts
       uses: actions/github-script@v6
