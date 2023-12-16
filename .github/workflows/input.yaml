@@ -1,25 +1,30 @@
-name: Docker Build Workflow name
+name: Create Issue Workflow
 
 on:
-  issue_comment:
-    types: [created]
+  push:
+    branches:
+      - main
 
 jobs:
-  build:
+  create-issue:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Check for Comment
-        id: check-comment
-        run: |
-          comment=$(jq -r .comment.body $GITHUB_EVENT_PATH)
-          echo "::set-output name=comment::$comment"
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
 
-      - name: Docker Build
-        if: steps.check-comment.outputs.comment == 'yes'
+      # - name: Install GitHub CLI
+      #   run: |
+      #     sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
+      #     sudo apt-add-repository https://cli.github.com/packages
+      #     sudo apt update
+      #     sudo apt install gh
+
+      - name: Create Issue
         run: |
-          # Your Docker build steps go here
-          echo "Building Docker image"
+          gh issue create -t "Confirm Docker Build" -b "Please comment with 'yes' or 'no' to confirm Docker build."
