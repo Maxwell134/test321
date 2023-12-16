@@ -8,18 +8,17 @@ jobs:
   get-collaborators:
     runs-on: ubuntu-latest
 
-    steps:  
-      - uses: Maxwell134/test321/.github/workflows/Check Employee.yaml@main
-        
+    steps:
+      - name: Call Employee Validator Workflow
+        uses: Maxwell134/test321/.github/workflows/Check Employee.yaml@main
         with:
           emp_name: "${{ github.actor }}"
           prompt: "Please enter 'yes' or 'no':"
-          
+
       - name: Checkout
         uses: actions/checkout@v3
 
       - name: Get Collaborators
-        # Securely access GITHUB_TOKEN
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -28,6 +27,3 @@ jobs:
           COLLABORATORS_URL="https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/collaborators?per_page=100"
           collaborators=$(curl -H "Authorization: token $GITHUB_TOKEN" "$COLLABORATORS_URL" | jq -r '.[].login')
           echo "Collaborators: $collaborators"
-
-     
-
