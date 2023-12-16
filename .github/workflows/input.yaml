@@ -1,4 +1,4 @@
-name: Docker Build Workflow
+name: Docker Build Workflow name
 
 on:
   issue_comment:
