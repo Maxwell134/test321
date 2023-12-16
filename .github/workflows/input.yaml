@@ -23,6 +23,10 @@ jobs:
       #     sudo apt update
       #     sudo apt install gh
 
+      - name: Debug Comment Value
+        run: echo "Comment value:${{ steps.get-input.outputs.comment }}"
+
+
       - name: Get User Input
         id: get-input
         run: |
