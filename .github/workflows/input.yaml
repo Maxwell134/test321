@@ -7,6 +7,9 @@ jobs:
    runs-on: [ubuntu-latest]
 
    steps:
+
+    - name: Install inquirer
+      run: npm install inquirer@5.5.3 --save-dev
     
     - name: Run custom script with interactive prompts
       uses: actions/github-script@v6
