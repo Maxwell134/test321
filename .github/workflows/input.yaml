@@ -1,9 +1,9 @@
 name: External Script Workflow
 
-on: [workflow_dispatch]
-  # push:
-  #   branches:
-  #     - main
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   my_job:
@@ -15,7 +15,7 @@ jobs:
       - name: Run External Script
         id: external_script
         run: |
-          enable_check=$(echo "import sys; enable_check = input('Do you want to enable the blue-green check? (y/n): '); print(enable_check)" | python -)
+          enable_check=$(python -u ${{ github.workspace }}/.github/workflows/prompt.py)
           echo "::set-output name=ENABLE_CHECK::$enable_check"
 
       - name: Use External Script Output
