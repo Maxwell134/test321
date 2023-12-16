@@ -9,26 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: NPM install 
-        run: npm install inquirer --save-dev
-      - name: Run custom script
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const inquirer = await import('inquirer');
-            async function main() {
-              const { proceed } = await inquirer.prompt({
-                type: 'confirm',
-                name: 'proceed',
-                message: 'Do you want to proceed further?',
-              });
-
-              if (proceed) {
-                console.log('Proceeding...');
-              } else {
-                console.log('Stopping workflow.');
-                await github.actions.cancelWorkflowRun(context.workflowRunId);
-              }
-            }
-
-            main();
+      
+      - name: pip install 
+        run: pip3 install inquirer
+        
+      - name: Run custom script with Python
+        run: python3 -u ${{ github.workspace }}/.github/workflows/prompt.py
+        
