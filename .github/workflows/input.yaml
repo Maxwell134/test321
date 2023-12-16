@@ -13,10 +13,18 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: Install GitHub CLI
+        run: |
+          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
+          sudo apt-add-repository https://cli.github.com/packages
+          sudo apt update
+          sudo apt install gh
+
+
       - name: Get User Input
         id: get-input
         run: |
-          comment=$(gh issue view <issue-number> --json body -q .body)
+          comment=$(gh issue view 1 --json body -q .body)
           echo "::set-output name=comment::$comment"
 
       - name: Docker Build
