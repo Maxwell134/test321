@@ -1,31 +1,28 @@
-name: Trigger workflow
+name: Deploy Workflow
 
-on: [workflow_dispatch]
-
+on:
+   [workflow_dispatch]
+   
 jobs:
-  build:
-   runs-on: [ubuntu-latest]
+  deploy:
+    runs-on: ubuntu-latest
 
-   steps:
+    environment:
+      name: production
+      url: https://example.com
+      # You can configure more environment settings and protections here
 
-    - name: Install inquirer
-      run: npm install inquirer --save-dev
-    
-    - name: Run custom script with interactive prompts
-      uses: actions/github-script@v6
-      with:
-        script: |
-         const inquirer = await import('inquirer');
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-         const { proceed } = await inquirer.prompt({
-         type: 'confirm',
-         name: 'proceed',
-         message: 'Do you want to proceed further?',
-          });
+      - name: Deploy to Production
+        run: |
+          # Your deployment steps go here
 
-         if (proceed) {
-         console.log('Proceeding...');
-          } else {
-          await github.actions.cancelWorkflowRun(context.workflowRunId);
-           }
-  
+      # Approval step
+      - name: Prompt for approval
+        if: github.actor == 'your-username'  # Adjust this condition based on your needs
+        run: echo "Approve the deployment by commenting on this pull request."
+
+      # Additional steps or notifications can be added based on approval status
