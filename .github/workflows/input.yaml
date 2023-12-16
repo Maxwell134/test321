@@ -1,46 +1,43 @@
-name: Deploy Workflow
+name: CI/CD Docker Pipeline
 
 on: [workflow_dispatch]
-  # workflow_run:
-  #   workflows: ["CI Workflow"]
-  #   types:
-  #     - completed
+  # push:
+  #   branches:
+  #     - main
 
 jobs:
-  deploy:
+  publish_to_registry:
     runs-on: ubuntu-latest
-
-    environment:
-      name: production
-      url: https://example.com
-      # You can configure more environment settings and protections here
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Prompt for approval
-        if: github.actor == 'your-username'
-        run: |
-          echo "Do you want to proceed with the deployment? (yes/no)"
-          read -r USER_INPUT
-          echo "User input is: $USER_INPUT"
-          echo "URL: ${{ secrets.DEPLOYMENT_URL }}"
-          echo "Proceeding to the next step..."
+      - name: Read pipeline.json
+        id: read-json
+        run: echo "::set-output name=json::$(cat pipeline.json)"
 
-      - name: Run next step only if user chooses "yes"
-        if: env.USER_INPUT == 'yes'
-        run: |
-          # Your "next step" commands here
-          # (e.g., build your code, deploy to production)
-          echo "Building and deploying..."
-          # ... replace with your actual commands ...
+      # - name: Set up Docker
+      #   uses: actions/setup-docker@v2
 
-      - name: Skip next step if user chooses "no"
-        if: env.USER_INPUT == 'no'
-        run: |
-          echo "Skipping build and deployment as requested."
+      # - name: Log in to Docker Registry
+      #   run: |
+      #     # Extract registry details from JSON
+      #     REGISTRY_URL=$(echo "${{ steps.read-json.outputs.json }}" | jq -r '.registry_url')
+      #     REGISTRY_USERNAME=$(echo "${{ steps.read-json.outputs.json }}" | jq -r '.registry_username')
+      #     REGISTRY_PASSWORD=$(echo "${{ steps.read-json.outputs.json }}" | jq -r '.registry_password')
 
-      - name: Final step (runs regardless of user choice)
-        run: |
-          echo "This step runs regardless of the user's response."
+      #     # Log in to the Docker registry
+      #     echo $REGISTRY_PASSWORD | docker login -u $REGISTRY_USERNAME --password-stdin $REGISTRY_URL
+
+      # - name: Build and Push Docker Image
+      #   run: |
+      #     # Extract information from JSON
+      #     IMAGE_NAME=$(echo "${{ steps.read-json.outputs.json }}" | jq -r '.image_name')
+      #     IMAGE_VERSION=$(echo "${{ steps.read-json.outputs.json }}" | jq -r '.image_version')
+
+      #     # Build Docker image
+      #     docker build -t $IMAGE_NAME:$IMAGE_VERSION .
+
+      #     # Push Docker image to the registry
+      #     docker push $IMAGE_NAME:$IMAGE_VERSION
