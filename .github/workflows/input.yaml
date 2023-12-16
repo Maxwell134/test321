@@ -18,26 +18,27 @@ jobs:
         with:
           python-version: 3.8
 
-      - name: Get User Input
-        id: get-input
+      - name: Set User Input
+        id: set-input
         run: |
           echo "This is an interactive prompt."
           echo "Please enter your choice (yes/no):"
-          read USER_INPUT
-          echo "::set-output name=user_input::$USER_INPUT"
+          echo "::set-output name=user_input::${{ env.USER_INPUT }}"
+        env:
+          USER_INPUT: 'yes'  # Set the default value or replace it with your logic
 
       - name: Use User Input
         run: |
-          echo "User entered: ${{ steps.get-input.outputs.user_input }}"
+          echo "User entered: ${{ steps.set-input.outputs.user_input }}"
 
       - name: Continue Workflow Based on Input
-        if: steps.get-input.outputs.user_input == 'yes'
+        if: steps.set-input.outputs.user_input == 'yes'
         run: |
           echo "Proceeding with additional steps..."
           # Add your additional steps here for the 'yes' case
 
       - name: Handle 'no' Case
-        if: steps.get-input.outputs.user_input == 'no'
+        if: steps.set-input.outputs.user_input == 'no'
         run: |
           echo "Exiting workflow based on user input 'no'"
           exit 0
