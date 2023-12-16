@@ -1,44 +1,32 @@
 name: Get Collaborators
 
 on:
-  # workflow_dispatch:
-   push:
-     branches: [main]
+  push:
+    branches: [main]
 
 jobs:
   get-collaborators:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
 
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Call other workflow
-      uses: Maxwell134/test321/.github/workflows/employee_validator.yaml@main
-      with:
-          emp_name: ${{ github.event.inputs.emp_name }}
-          prompt: ${{ github.event.inputs.prompt }}
-      
-    - name: Get Collaborators
-      run: |
-        REPO_OWNER=Maxwell134
-        REPO_NAME=test321
-        GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
-        
-        COLLABORATORS_URL="https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/collaborators"   
-        curl -H "Authorization: token $GITHUB_TOKEN" -s $COLLABORATORS_URL | jq '.[].login'
+      - name: Get Collaborators
+        # Securely access GITHUB_TOKEN
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          REPO_OWNER=Maxwell134
+          REPO_NAME=test321
+          COLLABORATORS_URL="https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/collaborators?per_page=100"
+          collaborators=$(curl -H "Authorization: token $GITHUB_TOKEN" "$COLLABORATORS_URL" | jq -r '.[].login')
+          echo "Collaborators: $collaborators"
 
-    
+      - name: Call Check Employee workflow
+        # Pass collected collaborators and desired prompt
+        uses: Maxwell134/test321/.github/workflows/Check Employee.yaml@main
+        with:
+          emp_name: "${{ github.actor }}"
+          prompt: "Please enter 'yes' or 'no':"
 
-
-      
-      
-
-
-
-
-
-
-      
-
-   
