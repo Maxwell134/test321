@@ -1,36 +1,47 @@
 name: Get Collaborators
 
-on:
-  push:
-    branches: [main]
+on: 
+  # push:
+  #   branches: [main]
+  
+    workflow_dispatch:
+      # inputs:
 
+      #   prompt:
+      #   description: 'Enter yes or no'
+      #   required: true
+      #   type: string
 jobs:
   get-collaborators:
     runs-on: ubuntu-latest
 
-    steps:
+    steps:        
+
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Prompt for user input
-        id: prompt-input
-        run: |
-          echo "::set-env name=USER_INPUT::$(read -p 'Enter your prompt: ' user_input && echo $user_input)"
-          
       - name: Get Collaborators
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          USER_INPUT: ${{ USER_INPUT }}
         run: |
           REPO_OWNER=Maxwell134
           REPO_NAME=test321
           COLLABORATORS_URL="https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/collaborators?per_page=100"
           collaborators=$(curl -H "Authorization: token $GITHUB_TOKEN" "$COLLABORATORS_URL" | jq -r '.[].login')
           echo "Collaborators: $collaborators"
-          
+
   workflow_call:
-    needs: get-collaborators
-    uses: Maxwell134/test321/.github/workflows/employee_validator.yaml@main
-    with:
-      emp_name: "${{ github.actor }}"
-      prompt: "${{ USER_INPUT }}"
+
+     needs: get-collaborators
+     uses: Maxwell134/test321/.github/workflows/employee_validator.yaml@main
+     with:
+            emp_name: "${{ github.actor }}"
+            prompt: ${{ github.event.inputs.prompt }}
+
+
+
+
+
+
+
+  
