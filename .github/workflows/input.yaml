@@ -19,4 +19,4 @@ jobs:
           echo "::set-output name=ENABLE_CHECK::$enable_check"
 
       - name: Use External Script Output
-        run: echo "User chose to enable blue-green check: ${{ needs.my_job.outputs.ENABLE_CHECK }}"
+        run: echo "User chose to enable blue-green check:${{ needs.my_job.outputs.ENABLE_CHECK }}"
