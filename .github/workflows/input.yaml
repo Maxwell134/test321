@@ -1,7 +1,9 @@
 name: External Script Workflow
 
-on:
-  workflow_dispatch
+on: [workflow_dispatch]
+  # push:
+  #   branches:
+  #     - main
 
 jobs:
   my_job:
@@ -13,11 +15,8 @@ jobs:
       - name: Run External Script
         id: external_script
         run: |
-          # Your Python script logic goes here
-          python - <<EOF
-          enable_check = input("Do you want to enable the blue-green check? (y/n): ")
-          print(f"::set-output name=ENABLE_CHECK::{enable_check}")
-          EOF
+          enable_check=$(python -c "enable_check = input('Do you want to enable the blue-green check? (y/n): '); print(enable_check)")
+          echo "::set-output name=ENABLE_CHECK::$enable_check"
 
       - name: Use External Script Output
-        run: echo "User chose to enable blue-green check:${{ needs.my_job.outputs.ENABLE_CHECK }}"
+        run: echo "User chose to enable blue-green check: ${{ needs.my_job.outputs.ENABLE_CHECK }}"
