@@ -4,25 +4,31 @@ on:
    [workflow_dispatch]
    
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-
-    environment:
-      name: production
-      url: https://example.com
-      # You can configure more environment settings and protections here
-
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - name: Deploy to Production
+      - name: Prompt user to proceed
+        uses: matrix-input@v2
+        with:
+          matrix: |
+            proceed: [yes, no]
+          prompt: Do you want to proceed with the build? (y/N)
+
+      - name: Run next step only if user chooses "yes"
+        if: ${{ matrix.proceed == 'yes' }}
         run: |
-          # Your deployment steps go here
+          # Your "next step" commands here
+          # (e.g., build your code, deploy to production)
+          echo "Building and deploying..."
+          # ... replace with your actual commands ...
 
-      # Approval step
-      - name: Prompt for approval
-        if: github.actor == 'your-username'  # Adjust this condition based on your needs
-        run: echo "Approve the deployment by commenting on this pull request."
+      - name: Skip next step if user chooses "no"
+        if: ${{ matrix.proceed == 'no' }}
+        run: |
+          echo "Skipping build and deployment as requested."
 
-      # Additional steps or notifications can be added based on approval status
+      - name: Final step (runs regardless of user choice)
+        run: |
+          echo "This step runs regardless of the user's response."
