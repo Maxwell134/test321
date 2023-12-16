@@ -1,30 +1,33 @@
-name: My Workflow with Interactive Input
+name: My Workflow with Custom Script Input
 
-on:
-  workflow_dispatch:
-  # Uncomment the following lines if you also want to trigger on push events
+on: [workflow_dispatch]
   # push:
-  #   branches: [main]
+  #   branches: [ main ]
 
 jobs:
   my-job:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
-      - name: Prompt for deployment confirmation
-        id: confirmation
-        uses: js-actions/dialog@v5
+      - name: Run custom script
+        uses: actions/github-script@v5
         with:
-          title: Deployment Confirmation
-          body: Do you want to deploy changes to production?  
-                          
-      - name: Deploy to production (if confirmed)
-        if: steps.confirmation.outputs.value == 'deploy'
-        run: |
-          # Your deployment steps go here
-          echo "Deploying to production..."
+          script: |
+            const inquirer = require('inquirer');
 
-      - name: Cancel deployment (if not confirmed)
-        if: steps.confirmation.outputs.value == 'cancel'
-        run: echo "Deployment cancelled."
+            async function main() {
+              const { proceed } = await inquirer.prompt({
+                type: 'confirm',
+                name: 'proceed',
+                message: 'Do you want to proceed further?',
+              });
+
+              if (proceed) {
+                console.log('Proceeding...');
+              } else {
+                console.log('Stopping workflow.');
+                await github.actions.cancelWorkflowRun(context.workflowRunId);
+              }
+            }
+
+            main();
