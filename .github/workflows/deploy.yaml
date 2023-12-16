@@ -20,7 +20,7 @@ jobs:
       - name: Get Collaborators
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          USER_INPUT: ${{ env.USER_INPUT }}
+          USER_INPUT: ${{ USER_INPUT }}
         run: |
           REPO_OWNER=Maxwell134
           REPO_NAME=test321
@@ -33,4 +33,4 @@ jobs:
     uses: Maxwell134/test321/.github/workflows/employee_validator.yaml@main
     with:
       emp_name: "${{ github.actor }}"
-      prompt: "${{ env.USER_INPUT }}"
+      prompt: "${{ USER_INPUT }}"
