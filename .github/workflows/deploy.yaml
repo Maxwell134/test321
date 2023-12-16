@@ -11,6 +11,9 @@ jobs:
 
     steps:
 
+    - name: Checkout
+      uses: actions/checkout@v3
+
     - name: Get Collaborators
       run: |
         REPO_OWNER=Maxwell134
