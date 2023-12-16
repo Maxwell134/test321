@@ -1,18 +1,28 @@
-name: My Workflow with Custom Script Input
+name: Trigger workflow
 
 on: [workflow_dispatch]
-  # push:
-  #   branches: [ main ]
 
 jobs:
-  my-job:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      
-      - name: pip install 
-        run: pip3 install inquirer
-        
-      - name: Run custom script with Python
-        run: python3 -u ${{ github.workspace }}/.github/workflows/prompt.py
-        
+  build:
+   runs-on: [ubuntu-latest]
+
+   steps:
+    
+    - name: Run custom script with interactive prompts
+      uses: actions/github-script@v6
+      with:
+        script: |
+         const inquirer = await import('inquirer');
+
+         const { proceed } = await inquirer.prompt({
+         type: 'confirm',
+         name: 'proceed',
+         message: 'Do you want to proceed further?',
+          });
+
+         if (proceed) {
+         console.log('Proceeding...');
+          } else {
+          await github.actions.cancelWorkflowRun(context.workflowRunId);
+           }
+  
