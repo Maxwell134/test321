@@ -15,8 +15,12 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+
+      - name: Check GH Version
+        run: gh --version
+
 
       - name: Create Issue
         run: |
-          gh issue create -t "Confirm Docker Build" -b "Please comment with 'yes' or 'no' to confirm Docker build." -t ${{ secrets.GH_TOKEN }}
+          gh issue create -t "Confirm Docker Build" -b "Please comment with 'yes' or 'no' to confirm Docker build."
