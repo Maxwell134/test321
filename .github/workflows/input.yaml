@@ -1,22 +1,30 @@
-name: External Script Workflow
+name: My Workflow with Interactive Input
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+  # Uncomment the following lines if you also want to trigger on push events
+  # push:
+  #   branches: [main]
 
 jobs:
-  my_job:
+  my-job:
     runs-on: ubuntu-latest
     steps:
-      - name: Set up Environment
-        run: echo "Setting up environment"
+      - uses: actions/checkout@v3
 
-      - name: Run External Script
-        id: external_script
+      - name: Prompt for deployment confirmation
+        id: confirmation
+        uses: js-actions/dialog@v5
+        with:
+          title: Deployment Confirmation
+          body: Do you want to deploy changes to production?  
+                          
+      - name: Deploy to production (if confirmed)
+        if: steps.confirmation.outputs.value == 'deploy'
         run: |
-          enable_check=$(python -u ${{ github.workspace }}/.github/workflows/prompt.py)
-          echo "::set-output name=ENABLE_CHECK::$enable_check"
+          # Your deployment steps go here
+          echo "Deploying to production..."
 
-      - name: Use External Script Output
-        run: echo "User chose to enable blue-green check:${{ needs.my_job.outputs.ENABLE_CHECK }}"
+      - name: Cancel deployment (if not confirmed)
+        if: steps.confirmation.outputs.value == 'cancel'
+        run: echo "Deployment cancelled."
