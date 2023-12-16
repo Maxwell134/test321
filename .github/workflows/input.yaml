@@ -20,4 +20,4 @@ jobs:
           EOF
 
       - name: Use External Script Output
-        run: echo "User chose to enable blue-green check: ${{ needs.my_job.outputs.ENABLE_CHECK }}"
+        run: echo "User chose to enable blue-green check:${{ needs.my_job.outputs.ENABLE_CHECK }}"
