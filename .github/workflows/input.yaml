@@ -1,4 +1,4 @@
-name: Create Issue Workflow
+name: Interactive Input Workflow
 
 on:
   push:
@@ -6,21 +6,38 @@ on:
       - main
 
 jobs:
-  create-issue:
+  interactive-input:
     runs-on: ubuntu-latest
-    
-    env:
-    
-      GH_TOKEN: ${{ github.token }}
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
-      - name: Check GH Version
-        run: gh --version
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
 
-
-      - name: Create Issue
+      - name: Get User Input
+        id: get-input
         run: |
-          gh issue create -t "Confirm Docker Build" -b "Please comment with 'yes' or 'no' to confirm Docker build."
+          echo "This is an interactive prompt."
+          echo "Please enter your choice (yes/no):"
+          read USER_INPUT
+          echo "::set-output name=user_input::$USER_INPUT"
+
+      - name: Use User Input
+        run: |
+          echo "User entered: ${{ steps.get-input.outputs.user_input }}"
+
+      - name: Continue Workflow Based on Input
+        if: steps.get-input.outputs.user_input == 'yes'
+        run: |
+          echo "Proceeding with additional steps..."
+          # Add your additional steps here for the 'yes' case
+
+      - name: Handle 'no' Case
+        if: steps.get-input.outputs.user_input == 'no'
+        run: |
+          echo "Exiting workflow based on user input 'no'"
+          exit 0
