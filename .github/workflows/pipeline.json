@@ -1,0 +1,7 @@
+{
+  "image_name": "7002370412/httpd",
+  "image_version": "latest",
+  "registry_url": "https:\\dockerhub.com",
+  "registry_username": "xxxxxxx",
+  "registry_password": "xxxxxx"
+}
