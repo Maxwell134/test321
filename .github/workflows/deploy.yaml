@@ -1,19 +1,41 @@
 name: Get Collaborators
 
 on:
-  workflow_dispatch:
+  # workflow_dispatch:
+   push:
+     branches: [main]
 
 jobs:
   get-collaborators:
     runs-on: ubuntu-latest
 
     steps:
+
     - name: Get Collaborators
       run: |
         REPO_OWNER=Maxwell134
         REPO_NAME=test321
         GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
         
-        COLLABORATORS_URL="https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/collaborators"
-        
+        COLLABORATORS_URL="https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/collaborators"   
         curl -H "Authorization: token $GITHUB_TOKEN" -s $COLLABORATORS_URL | jq '.[].login'
+
+    - name: Call other workflow
+      uses: .github/workflows/employee_validator.yaml@main
+      with:
+          emp_name: ${{ github.event.inputs.emp_name }}
+          prompt: ${{ github.event.inputs.prompt }}
+      
+
+
+      
+      
+
+
+
+
+
+
+      
+
+   
