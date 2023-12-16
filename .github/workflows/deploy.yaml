@@ -9,6 +9,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    
+      - name: Call Check Employee workflow
+        uses: Maxwell134/test321/.github/workflows/Check Employee.yaml@main
+        
+        with:
+          emp_name: "${{ github.actor }}"
+          prompt: "Please enter 'yes' or 'no':"
+          
       - name: Checkout
         uses: actions/checkout@v3
 
@@ -23,10 +31,5 @@ jobs:
           collaborators=$(curl -H "Authorization: token $GITHUB_TOKEN" "$COLLABORATORS_URL" | jq -r '.[].login')
           echo "Collaborators: $collaborators"
 
-      - name: Call Check Employee workflow
-        # Pass collected collaborators and desired prompt
-        uses: Maxwell134/test321/.github/workflows/Check Employee.yaml@main
-        with:
-          emp_name: "${{ github.actor }}"
-          prompt: "Please enter 'yes' or 'no':"
+     
 
