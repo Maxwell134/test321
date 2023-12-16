@@ -1,44 +1,36 @@
-name: Interactive Input Workflow
+name: External Tool Workflow
 
 on:
-  push:
-    branches:
-      - main
+  issue_comment:
+    types:
+      - created
 
 jobs:
-  interactive-input:
+  process-input:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
-
-      - name: Set User Input
-        id: set-input
+      - name: Get Comment Body
+        id: get-comment-body
         run: |
-          echo "This is an interactive prompt."
-          echo "Please enter your choice (yes/no):"
-          echo "::set-output name=user_input::${{ env.USER_INPUT }}"
-        env:
-          USER_INPUT: 'yes'  # Set the default value or replace it with your logic
+          COMMENT_BODY=$(jq -r .comment.body $GITHUB_EVENT_PATH)
+          echo "::set-output name=comment_body::$COMMENT_BODY"
 
-      - name: Use User Input
+      - name: Process Comment
         run: |
-          echo "User entered: ${{ steps.set-input.outputs.user_input }}"
+          COMMENT=$"${{ steps.get-comment-body.outputs.comment_body }}"
+          echo "User entered: $COMMENT"
 
-      - name: Continue Workflow Based on Input
-        if: steps.set-input.outputs.user_input == 'yes'
-        run: |
-          echo "Proceeding with additional steps..."
-          # Add your additional steps here for the 'yes' case
-
-      - name: Handle 'no' Case
-        if: steps.set-input.outputs.user_input == 'no'
-        run: |
-          echo "Exiting workflow based on user input 'no'"
-          exit 0
+          # Process the user input and perform necessary actions
+          if [[ $COMMENT == *"yes"* ]]; then
+            echo "Proceeding with additional steps..."
+            # Add your additional steps here for the 'yes' case
+          elif [[ $COMMENT == *"no"* ]]; then
+            echo "Exiting workflow based on user input 'no'"
+            exit 0
+          else
+            echo "Invalid input. Please enter 'yes' or 'no'."
+          fi
