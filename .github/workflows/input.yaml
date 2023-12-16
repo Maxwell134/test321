@@ -1,23 +1,23 @@
-name: Your Workflow
+name: External Script Workflow
 
 on:
-  workflow_dispatch:
-    inputs:
-      proceed:
-        description: 'Proceed? (yes/no)'
-        required: true
+  workflow_dispatch
 
 jobs:
-  your_job:
+  my_job:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Step 1
-        run: python -c "print('Executing Step 1')"
+      - name: Set up Environment
+        run: echo "Setting up environment"
 
-      - name: Step 2
-        run: python -c "print('Executing Step 2')"
+      - name: Run External Script
+        id: external_script
+        run: |
+          # Your Python script logic goes here
+          python - <<EOF
+          enable_check = input("Do you want to enable the blue-green check? (y/n): ")
+          print(f"::set-output name=ENABLE_CHECK::{enable_check}")
+          EOF
 
-      - name: Final Step
-        if: ${{ github.event.inputs.proceed == 'yes' }}
-        run: python -c "print('Executing Final Step')"
+      - name: Use External Script Output
+        run: echo "User chose to enable blue-green check: ${{ needs.my_job.outputs.ENABLE_CHECK }}"
