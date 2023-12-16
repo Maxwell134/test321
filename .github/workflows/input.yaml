@@ -15,7 +15,7 @@ jobs:
 
       - name: Read pipeline.json
         id: read-json
-        run: echo "::set-output name=json::$(cat pipeline.json)"
+        run: echo "::set-output name=json::$(cat .github/workflows/pipeline.json)"
 
       # - name: Set up Docker
       #   uses: actions/setup-docker@v2
