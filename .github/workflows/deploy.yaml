@@ -8,10 +8,8 @@ jobs:
   get-collaborators:
     runs-on: ubuntu-latest
 
-    steps:
-    
-      - name: Call Check Employee workflow
-        uses: Maxwell134/test321/.github/workflows/Check Employee.yaml@main
+    steps:  
+      - uses: Maxwell134/test321/.github/workflows/Check Employee.yaml@main
         
         with:
           emp_name: "${{ github.actor }}"
