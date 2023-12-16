@@ -19,4 +19,4 @@ jobs:
 
       - name: Create Issue
         run: |
-          gh issue create -t "Confirm Docker Build" -b "Please comment with 'yes' or 'no' to confirm Docker build."
+          gh issue create -t "Confirm Docker Build" -b "Please comment with 'yes' or 'no' to confirm Docker build." -t ${{ secrets.GH_TOKEN }}
