@@ -5,12 +5,12 @@ on:
   #   branches: [main]
   
     workflow_dispatch:
-      # inputs:
+      inputs:
 
-      #   prompt:
-      #   description: 'Enter yes or no'
-      #   required: true
-      #   type: string
+        prompt:
+        description: 'Enter yes or no'
+        required: true
+        type: string
 jobs:
   get-collaborators:
     runs-on: ubuntu-latest
