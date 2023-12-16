@@ -15,7 +15,7 @@ jobs:
       - name: Run External Script
         id: external_script
         run: |
-          enable_check=$(python -c "enable_check = input('Do you want to enable the blue-green check? (y/n): '); print(enable_check)")
+          enable_check=$(echo "import sys; enable_check = input('Do you want to enable the blue-green check? (y/n): '); print(enable_check)" | python -)
           echo "::set-output name=ENABLE_CHECK::$enable_check"
 
       - name: Use External Script Output
