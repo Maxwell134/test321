@@ -1,23 +1,35 @@
 name: Deploy Workflow
 
-on:
-  [workflow_dispatch]
-   
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
+on: [workflow_dispatch]
+  # workflow_run:
+  #   workflows: ["CI Workflow"]
+  #   types:
+  #     - completed
 
-      - name: Prompt user to proceed
-        uses: matrix-input@v2
-        with:
-          matrix: |
-            proceed: [yes, no]
-          prompt: Do you want to proceed with the build? (y/N)
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    environment:
+      name: production
+      url: https://example.com
+      # You can configure more environment settings and protections here
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Prompt for approval
+        if: github.actor == 'your-username'
+        run: |
+          echo "Do you want to proceed with the deployment? (yes/no)"
+          read -r USER_INPUT
+          echo "User input is: $USER_INPUT"
+          echo "URL: ${{ secrets.DEPLOYMENT_URL }}"
+          echo "Proceeding to the next step..."
 
       - name: Run next step only if user chooses "yes"
-        if: ${{ matrix.proceed == 'yes' }}
+        if: env.USER_INPUT == 'yes'
         run: |
           # Your "next step" commands here
           # (e.g., build your code, deploy to production)
@@ -25,7 +37,7 @@ jobs:
           # ... replace with your actual commands ...
 
       - name: Skip next step if user chooses "no"
-        if: ${{ matrix.proceed == 'no' }}
+        if: env.USER_INPUT == 'no'
         run: |
           echo "Skipping build and deployment as requested."
 
