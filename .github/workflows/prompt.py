@@ -1,3 +1,13 @@
-# prompt.py
-enable_check = input("Do you want to enable the blue-green check? (y/n): ")
-print(enable_check)
+from inquirer import confirm
+
+def main():
+  proceed = confirm(message="Do you want to proceed further?")
+  if proceed:
+    print("Proceeding...")
+  else:
+    print("Stopping workflow.")
+    # Use subprocess to execute a command to cancel the workflow
+    # (e.g., `gh workflow cancel ...`)
+
+if __name__ == "__main__":
+  main()
