@@ -17,7 +17,7 @@ jobs:
           python -m pip install questionary
       - name: Run analysis prompt
         run: |
-          ANALYSIS_TYPE=$(echo "Regression\nClassification\nBoth" | questionary text --prompt "What type of analysis should I run?" | cut -d ' ' -f 1)
+          ANALYSIS_TYPE=$(echo "Regression\nClassification\nBoth" | python -m questionary text --prompt "What type of analysis should I run?" | cut -d ' ' -f 1)
           echo "Running analysis: $ANALYSIS_TYPE"
         env:
           ANALYSIS_TYPE: ${{ env.ANALYSIS_TYPE }}
