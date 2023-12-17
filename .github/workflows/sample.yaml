@@ -8,21 +8,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
       - name: Install dependencies
-        run: python3 -m pip install questionary
-      - name: Run analysis prompt
-        shell: bash 
         run: |
-          from questionary import prompt
-          questions = [
-              {
-                  'type': 'select',
-                  'name': 'analysis_type',
-                  'message': 'What type of analysis should I run?',
-                  'choices': ['Regression', 'Classification', 'Both']
-              }
-          ]
-          answers = prompt(questions)
-          print(f"Running analysis: {answers['analysis_type']}")
+          python -m pip install questionary
+      - name: Run analysis prompt
+        run: |
+          ANALYSIS_TYPE=$(echo "Regression\nClassification\nBoth" | questionary text --prompt "What type of analysis should I run?" | cut -d ' ' -f 1)
+          echo "Running analysis: $ANALYSIS_TYPE"
         env:
           ANALYSIS_TYPE: ${{ env.ANALYSIS_TYPE }}
