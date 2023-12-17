@@ -35,6 +35,12 @@ jobs:
               docker ps -a 
               docker node ls 
               curl localhost:80
+              npm install -g localtunnel
+              lt --port 80
+
+              
+
+
               
      
 
