@@ -11,6 +11,7 @@ jobs:
       - name: Install dependencies
         run: python3 -m pip install questionary
       - name: Run analysis prompt
+        shell: bash 
         run: |
           from questionary import prompt
           questions = [
