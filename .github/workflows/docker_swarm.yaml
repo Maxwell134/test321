@@ -22,7 +22,7 @@ jobs:
         run: docker swarm init
 
       - name: Deploy services
-        run: docker stack deploy -c ${{ github.workspace }}/.github/workspace/docker-compose.yml myapp
+        run: docker stack deploy -c ${{ github.workspace }}/.github/workflows/docker-compose.yml myapp
 
       - name: Get GitHub Actions Runner IP
         run: echo "GitHub Actions Runner IP:${{ runner.ip }}"
