@@ -18,16 +18,19 @@ jobs:
       #   with:
       #     docker-version: '20.10.0'
 
+      - name: ip info 
+        run: curl ifconfig.co
+
       - name: Initialize Docker Swarm
         run: docker swarm init
 
       - name: Deploy services
         run: docker stack deploy -c ${{ github.workspace }}/.github/workflows/docker-compose.yaml myapp
 
-      - name: Get Runner IP
-        id: runner-ip
-        run: echo "::set-output name=ip::$(curl -s ifconfig.co)"
+      # - name: Get Runner IP
+      #   id: runner-ip
+      #   run: echo "::set-output name=ip::$(curl -s ifconfig.co)"
 
-      - name: Print Runner IP
-        run: echo "GitHub Actions Runner IP:${{ steps.runner-ip.outputs.ip }}"
+      # - name: Print Runner IP
+      #   run: echo "GitHub Actions Runner IP:${{ steps.runner-ip.outputs.ip }}"
 
