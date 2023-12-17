@@ -9,13 +9,19 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Install dependencies
-        run: python3 -m pip install inquirer2
+        run: python3 -m pip install questionary
       - name: Run analysis prompt
         run: |
-          from inquirer2 import Prompt, Checkbox
-          message = "What type of analysis should I run?"
-          choices = ["Regression", "Classification", "Both"]
-          analysis_type = Prompt(message).execute()
-          print(f"Running analysis: {analysis_type}")
+          from questionary import prompt
+          questions = [
+              {
+                  'type': 'select',
+                  'name': 'analysis_type',
+                  'message': 'What type of analysis should I run?',
+                  'choices': ['Regression', 'Classification', 'Both']
+              }
+          ]
+          answers = prompt(questions)
+          print(f"Running analysis: {answers['analysis_type']}")
         env:
           ANALYSIS_TYPE: ${{ env.ANALYSIS_TYPE }}
