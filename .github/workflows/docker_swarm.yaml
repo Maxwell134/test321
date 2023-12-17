@@ -24,6 +24,10 @@ jobs:
       - name: Deploy services
         run: docker stack deploy -c ${{ github.workspace }}/.github/workflows/docker-compose.yaml myapp
 
-      - name: Get GitHub Actions Runner IP
-        run: echo "GitHub Actions Runner IP:${{ runner.ip }}"
+      - name: Get Runner IP
+        id: runner-ip
+        run: echo "::set-output name=ip::$(curl -s ifconfig.co)"
+
+      - name: Print Runner IP
+        run: echo "GitHub Actions Runner IP:${{ steps.runner-ip.outputs.ip }}"
 
