@@ -13,10 +13,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Docker
-        uses: docker/setup-docker@v2
-        with:
-          docker-version: '20.10.0'
+      # - name: Set up Docker
+      #   uses: docker/setup-docker@v2
+      #   with:
+      #     docker-version: '20.10.0'
 
       - name: Initialize Docker Swarm
         run: docker swarm init
