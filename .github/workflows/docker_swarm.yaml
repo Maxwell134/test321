@@ -25,7 +25,8 @@ jobs:
         run: docker swarm init
 
       - name: Deploy services
-        run: docker stack deploy -c ${{ github.workspace }}/.github/workflows/docker-compose.yaml myapp
+        # run: docker stack deploy -c ${{ github.workspace }}/.github/workflows/docker-compose.yaml myapp
+        run: docker service create --name my-nginx --publish 80:80 nginx
 
       - name: Docker services names
         run: |
@@ -33,6 +34,7 @@ jobs:
               docker service ls 
               docker ps -a 
               docker node ls 
+              curl localhost:80
               
      
 
