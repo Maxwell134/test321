@@ -1,6 +1,7 @@
 name: Sample checker
 
-on: [workflow_dispatch]
+on:
+  workflow_dispatch:
 
 jobs:
   my-job:
@@ -15,6 +16,6 @@ jobs:
           message = "What type of analysis should I run?"
           choices = ["Regression", "Classification", "Both"]
           analysis_type = Prompt(message).execute()
-          echo "Running analysis: $analysis_type"
+          print(f"Running analysis: {analysis_type}")
         env:
-          ANALYSIS_TYPE: ${{ analysis_type }}
+          ANALYSIS_TYPE: ${{ env.ANALYSIS_TYPE }}
