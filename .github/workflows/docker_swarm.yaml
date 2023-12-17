@@ -1,0 +1,25 @@
+name: Deploy to Swarm
+
+on: [workflow_dispatch]
+  # push:
+  #   branches:
+  #     - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Docker
+        uses: docker/setup-docker@v2
+        with:
+          docker-version: '20.10.0'
+
+      - name: Initialize Docker Swarm
+        run: docker swarm init
+
+      - name: Deploy services
+        run: docker stack deploy -c ${{ github.workspace }}/.github/workspace/docker-compose.yml myapp
