@@ -1,14 +1,25 @@
-name: environment test
+name: Proceed or Abort?
 
-on:
-  workflow_dispatch:
+on: [ workflow_dispatch ]
 
 jobs:
-  build:
+  confirm:
     runs-on: ubuntu-latest
-    environment: 
-      name: production
-
     steps:
-      - name: Hello world
-        run: echo "hello world"
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Prompt for confirmation
+        id: confirm
+        run: |
+          python3 ./confirmation.py
+          exit ${{ steps.confirm.outputs.exit_code }}
+
+      - name: Proceed with action (if confirmed)
+        if: ${{ steps.confirm.outputs.exit_code == 0 }}
+        # Add your actual workflow steps here...
+
+      - name: Terminate action (if aborted)
+        if: ${{ steps.confirm.outputs.exit_code == 1 }}
+        run: exit 1
+
