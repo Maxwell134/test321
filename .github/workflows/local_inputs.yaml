@@ -15,7 +15,7 @@ jobs:
       - name: Prompt for confirmation
         id: confirm
         run: |
-          python3  maxwell134/test321/.github/confirmation.py
+          python3  maxwell134/test321/.github/workflows/confirmation.py
           exit ${{ steps.confirm.outputs.exit_code }}
 
       - name: Proceed with action (if confirmed)
