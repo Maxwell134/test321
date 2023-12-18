@@ -1,20 +1,20 @@
-name: Proceed or Abort?
+name: GitHub Action with Timeout
 
-on: [ workflow_dispatch ]
+on: [workflow_dispatch]
 
 jobs:
-  confirm:
+  timeout_example:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: pip install 
-        run: pip install github
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
 
-      - name: Prompt for confirmation
-        run: echo "prompt yes or no"
-        timeout-minutes: 10
-        
-        
-
+    - name: Run Python script with timeout
+      run: |
+        timeout 5m python -u ${{github.workspace}}/.github/workflows/product.py
