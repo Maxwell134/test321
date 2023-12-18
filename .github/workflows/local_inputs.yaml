@@ -1,0 +1,12 @@
+name: environment test 
+
+on: [workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: [ubuntu-latest]
+
+    steps:
+      - name: Hello world
+        run: echo " hello world"
+
