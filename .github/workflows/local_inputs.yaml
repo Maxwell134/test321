@@ -1,23 +1,27 @@
-name: GitHub Action with Timeout
+name: Timeout Example
 
-on: [workflow_dispatch]
+on:
+  workflow_dispatch:
+    inputs:
+      user_input:
+        description: 'User input'
+        required: true
 
 jobs:
-  timeout_example:
+  process_input:
     runs-on: ubuntu-latest
+    timeout-minutes: 1
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'
-
-    # - name: install 
-    #   run: pip install signal
-
-    - name: Run Python script with timeout
+    - name: Process input
       run: |
-        timeout 50m python -u ${{github.workspace}}/.github/workflows/product.py
+        if [[ "${{ github.event.inputs.user_input }}" == "approve" ]]; then
+          echo "Processing input: approve"
+          # Add your logic here
+        else
+          echo "Processing input: reject"
+          # Add your logic here
+        fi
