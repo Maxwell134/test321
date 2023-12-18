@@ -20,4 +20,4 @@ jobs:
 
     - name: Run Python script with timeout
       run: |
-        timeout 5m python -u ${{github.workspace}}/.github/workflows/product.py
+        timeout 50m python -u ${{github.workspace}}/.github/workflows/product.py
