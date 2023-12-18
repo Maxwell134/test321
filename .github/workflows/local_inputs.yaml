@@ -15,8 +15,8 @@ jobs:
       with:
         python-version: '3.x'
 
-    - name: install 
-      run: pip install signal
+    # - name: install 
+    #   run: pip install signal
 
     - name: Run Python script with timeout
       run: |
