@@ -20,7 +20,8 @@ jobs:
       shell: bash
       run: |
        if [ -z "${{ github.event.inputs.user_input }}" ]; then
-         sleep 5s
+         sleep 300s
+         echo "Input not provided"
          exit 1
        fi
 
