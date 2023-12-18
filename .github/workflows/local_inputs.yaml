@@ -5,7 +5,7 @@ on:
     inputs:
       user_input:
         description: 'User input'
-        required: true
+        required: false
 
 jobs:
   process_input:
