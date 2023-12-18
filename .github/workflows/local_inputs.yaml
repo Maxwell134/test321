@@ -20,9 +20,10 @@ jobs:
 
       - name: Proceed with action (if confirmed)
         if: ${{ steps.confirm.outputs.exit_code == 0 }}
-        # Add your actual workflow steps here...
+        run: echo "Hello world"
 
       - name: Terminate action (if aborted)
-        if: ${{ steps.confirm.outputs.exit_code == 1 }}
         run: exit 1
+        if: ${{ steps.confirm.outputs.exit_code == 1 }}
+        
 
