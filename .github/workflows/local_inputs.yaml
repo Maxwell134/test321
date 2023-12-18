@@ -1,12 +1,14 @@
-name: environment test 
+name: environment test
 
-on: [workflow_dispatch]
+on:
+  workflow_dispatch:
 
 jobs:
   build:
-    runs-on: [ubuntu-latest]
+    runs-on: ubuntu-latest
+    environment: 
+      name: production
 
     steps:
       - name: Hello world
-        run: echo " hello world"
-
+        run: echo "hello world"
