@@ -1,9 +1,9 @@
 name: Get Collaborators
 
 on:   
-  push:
-    branches:
-      - main
+  # push:
+  #   branches:
+  #     - main
   workflow_dispatch:
     inputs:      
       prompt:
@@ -40,7 +40,7 @@ jobs:
 
   
   python_checker:
-    needs: get-collaborators
+    needs: [get-collaborators, workflow_call]
     runs-on: ubuntu-latest
     steps:
       - name: Step 1
