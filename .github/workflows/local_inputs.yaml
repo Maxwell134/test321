@@ -23,4 +23,7 @@ jobs:
 
           # Use the inputs in subsequent steps
           echo "Input1: $input1"
+
+      - name: Hello pie
+        run: echo " Hello pie"
           echo "Input2: $input2"
