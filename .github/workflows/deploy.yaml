@@ -48,7 +48,8 @@ jobs:
       - name: flask builder
         uses: actions/checkout@v3
         with:
-          repository: Maxwell134/Hello_world/.github/workflows/flask.yml@main
+          repository: Maxwell134/Hello_world/.github/workflows/flask.yml
+          ref: main
           
 
   # build:
