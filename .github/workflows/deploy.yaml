@@ -54,10 +54,8 @@ jobs:
       
   docker_build:
     needs: [get-collaborators, workflow_call]
-    runs-on: [ubuntu-latest]
-    steps:
-     - name: Docker build
-       uses:  Maxwell134/Hello_world/.github/workflows/action.yml@main
+    uses:  Maxwell134/Hello_world/.github/workflows/action.yml@main
+    
       
          
          
