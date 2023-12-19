@@ -15,10 +15,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-            ref: main, master
-                
-
+                    
       - name: Get Collaborators
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -51,6 +48,12 @@ jobs:
   build:
     needs: [get-collaborators, workflow_call, python_checker]
     uses: Maxwell134/Hello_world/.github/workflows/action.yml@main
+    with:
+     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+     DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+     DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+     
+     
     
     
         
