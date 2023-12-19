@@ -1,27 +1,26 @@
-name: Timeout Example
+name: Use GitHub Issue Inputs
 
 on:
-  workflow_dispatch:
-    inputs:
-      user_input:
-        description: 'User input'
-        required: false
+  issue_comment:
+    types:
+      - created
 
 jobs:
-  process_input:
+  process_issue_comment:
     runs-on: ubuntu-latest
-    timeout-minutes: 1
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Process input
-      shell: bash
-      run: |
-       if [ -z "${{ github.event.inputs.user_input }}" ]; then
-         sleep 60s
-         echo "Input not provided"
-         exit 1
-       fi
+      - name: Extract inputs from issue comment
+        run: |
+          # Extract the comment body
+          comment=$(curl -sL "${{ github.event.comment.url }}" | jq -r .body)
 
+          # Parse the comment for specific inputs
+          input1=$(echo "$comment" | grep -oP 'Input1: \K[^ ]+')
+          input2=$(echo "$comment" | grep -oP 'Input2: \K[^ ]+')
+
+          # Use the inputs in subsequent steps
+          echo "Input1: $input1"
+          echo "Input2: $input2"
