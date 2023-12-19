@@ -20,10 +20,16 @@ jobs:
           # Parse the comment for specific inputs
           input1=$(echo "$comment" | grep -oP 'Input1: \K[^ ]+')
           input2=$(echo "$comment" | grep -oP 'Input2: \K[^ ]+')
-
-          # Use the inputs in subsequent steps
           echo "Input1: $input1"
 
+          # Use the inputs in subsequent steps
+          
+
       - name: Hello pie
-        run: echo " Hello pie"
+        run: echo "Hello pie"
+
+
+
+
+        
           echo "Input2: $input2"
