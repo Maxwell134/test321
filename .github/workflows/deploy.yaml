@@ -1,11 +1,8 @@
-name: Get Collaborators
+name: Get Collaborators and Build
 
-on:   
-  # push:
-  #   branches:
-  #     - main
+on:
   workflow_dispatch:
-    inputs:      
+    inputs:
       prompt:
         description: 'Enter yes or no'
         required: true
@@ -15,7 +12,7 @@ jobs:
   get-collaborators:
     runs-on: ubuntu-latest
 
-    steps:        
+    steps:
       - name: Checkout
         uses: actions/checkout@v3
 
@@ -29,8 +26,6 @@ jobs:
           collaborators=$(curl -H "Authorization: token $GITHUB_TOKEN" "$COLLABORATORS_URL" | jq -r '.[].login')
           echo "Collaborators: $collaborators"
 
-      
-
   workflow_call:
     needs: get-collaborators
     uses: Maxwell134/test321/.github/workflows/employee_validator.yaml@main
@@ -38,7 +33,6 @@ jobs:
       emp_name: "${{ github.actor }}"
       prompt: ${{ github.event.inputs.prompt }}
 
-  
   python_checker:
     needs: [get-collaborators, workflow_call]
     runs-on: ubuntu-latest
@@ -46,27 +40,20 @@ jobs:
       - name: Step 1
         run: echo "This is Job 1"
 
-      - name: Actions call 
-        uses:  Maxwell134/test321/.github/actions/python@main
+      - name: Actions call
+        uses: Maxwell134/test321/.github/actions/python@main
         with:
-            python-version: 3.9     
-      
-      
-  docker_build:
-    needs: [get-collaborators, workflow_call]
-    uses:  Maxwell134/Hello_world/.github/workflows/action.yml@main
-    with: 
-      ref: master
-    
-      
-         
-         
+          python-version: 3.9
 
+  build:
+    needs: [get-collaborators, workflow_call, python_checker]
+    runs-on: ubuntu-latest
 
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          ref: main
 
-
-
-    
-
-
-  
+      - name: Docker login and build
+        uses: Maxwell134/Hello_world/.github/workflows/action.yml@main
