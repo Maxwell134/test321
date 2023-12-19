@@ -46,11 +46,9 @@ jobs:
           python-version: 3.9
 
   build:
-    needs: [get-collaborators, workflow_call, python_checker]
+    needs: [workflow_call, python_checker]
     uses: Maxwell134/Hello_world/.github/workflows/action.yml@main
-    with:
-     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-     
+    
      
     
     
