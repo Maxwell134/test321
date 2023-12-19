@@ -21,6 +21,7 @@ jobs:
           input1=$(echo "$comment" | grep -oP 'Input1: \K[^ ]+')
           input2=$(echo "$comment" | grep -oP 'Input2: \K[^ ]+')
           echo "Input1: $input1"
+          echo "Input2: $input2"
 
           # Use the inputs in subsequent steps
           
@@ -32,4 +33,4 @@ jobs:
 
 
         
-          echo "Input2: $input2"
+         
