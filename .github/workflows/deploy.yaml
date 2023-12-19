@@ -43,18 +43,11 @@ jobs:
       - name: Actions call
         uses: Maxwell134/test321/.github/actions/python@main
         with:
-          python-version: 3.9
+          python-version: 3.9          
 
-      - name: flask builder
-        uses: actions/checkout@v3
-        with:
-          repository: Maxwell134/Hello_world/.github/workflows/flask.yml
-          ref: main
-          
-
-  # build:
-  #   needs: [workflow_call, python_checker]
-  #   uses: Maxwell134/Hello_world/.github/workflows/action.yml@main
+  build:
+    needs: [workflow_call, python_checker]
+    uses: Maxwell134/Hello_world/.github/workflows/flask.yml@main
     
      
     
