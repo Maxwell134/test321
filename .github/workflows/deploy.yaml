@@ -40,7 +40,7 @@ jobs:
 
   
   python_checker:
-    needs: workflow_call
+    needs: get-collaborators
     runs-on: ubuntu-latest
     steps:
       - name: Step 1
@@ -49,7 +49,7 @@ jobs:
       - name: Actions call 
         uses:  Maxwell134/test321/.github/actions/python@main
         with:
-            python-version: 3.10      
+            python-version: 3.9     
       
 
         
