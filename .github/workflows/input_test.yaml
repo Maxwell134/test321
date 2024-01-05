@@ -1,4 +1,4 @@
-name: Approval Workflow
+name: tom
 
 on: [pull_request]
 
