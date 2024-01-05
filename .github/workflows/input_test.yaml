@@ -1,14 +1,26 @@
-name: my_test
+name: tom
 
 on:
   workflow_dispatch:
+    inputs:
+      user_input:
+        description: 'Enter "yes" or "no"'
+        required: true
+
 jobs:
-  use_api:
+  process_input:
     runs-on: ubuntu-latest
-    permissions:
-      issues: read
+
     steps:
-      - env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh api https://api.github.com/repos/octocat/Spoon-Knife/issues
+    - name: Check user input
+      run: |
+        if [ "${{ github.event.inputs.user_input }}" = "yes" ]; then
+          echo "User selected 'yes'"
+          # Add your 'yes' specific actions or commands here
+        elif [ "${{ github.event.inputs.user_input }}" = "no" ]; then
+          echo "User selected 'no'"
+          # Add your 'no' specific actions or commands here
+        else
+          echo "Invalid input. Please enter 'yes' or 'no'."
+          exit 1
+        fi
