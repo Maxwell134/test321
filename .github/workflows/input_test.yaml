@@ -12,16 +12,16 @@ jobs:
   check_employee:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-  
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Create GitHub issue
-        id: create_issue
+      - name: Create input issue
+        id: create_input_issue
         run: |
-          ISSUE_BODY="Please choose 'yes' or 'no' to proceed with the employee check."
-          echo "::set-output name=issue_number::$(gh issue create --title 'Proceed or Abort?' --body \"$ISSUE_BODY\" --labels 'workflow')"
+          ISSUE_BODY="Please provide input for employee check. Use the format: '/input yes' or '/input no'"
+          echo "::set-output name=input_issue_number::$(gh issue create --title 'Input for Employee Check' --body \"$ISSUE_BODY\" --labels 'workflow' | jq -r '.number')"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -31,15 +31,15 @@ jobs:
         timeout-minutes: 10  # Adjust the timeout as needed
 
       - name: Check issue comments
-        id: check_issue_comments
-        run: echo "::set-output name=comments::$(gh issue list-comments ${{ steps.create_issue.outputs.issue_number }} --json body -q '.[].body')"
+        id: check_input_issue_comments
+        run: echo "::set-output name=comments::$(gh issue list-comments ${{ steps.create_input_issue.outputs.input_issue_number }} --json body -q '.[].body')"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Process user input
         id: process_input
         run: |
-          USER_INPUT=$(echo "$COMMENTS" | grep -oP '(?<=::set-output name=issue_number::)[^\s]+')
+          USER_INPUT=$(echo "$COMMENTS" | grep -oP '/input\s+\K\w+')
           if [ "$USER_INPUT" == 'yes' ]; then
             echo "Proceeding with the job..."
             echo "::set-output name=proceed::true"
@@ -51,7 +51,7 @@ jobs:
             echo "::set-output name=proceed::false"
           fi
         env:
-          COMMENTS: ${{ steps.check_issue_comments.outputs.comments }}
+          COMMENTS: ${{ steps.check_input_issue_comments.outputs.comments }}
 
       - name: Print result
         run: |
