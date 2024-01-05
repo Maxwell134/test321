@@ -1,6 +1,6 @@
 name: tom
 
-on: [pull_request]
+on: workflow_dispatch
 
 jobs:
   approval:
