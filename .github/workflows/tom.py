@@ -1,33 +1,26 @@
 import os
-import json
-import requests
 
-# Personal access token for authentication
-GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
+from github import Github
 
-# The repository to add this issue to
-REPO_OWNER = 'Maxwell134'
-REPO_NAME = 'test321'
+# Replace 'YOUR-TOKEN' with your GitHub personal access token
+token = os.environ.get("GITHUB_TOKEN")
+repo_owner = "Maxwell134"
+repo_name = "test321"
 
-def make_github_issue(title, body=None, labels=None):
-    '''Create an issue on github.com using the given parameters.'''
-    # Our url to create issues via POST
-    url = f'https://api.github.com/repos/{REPO_OWNER}/{REPO_NAME}/issues'
-    # Create an authenticated session to create the issue
-    session = requests.Session()
-    session.headers = {'Authorization': f'Bearer {GITHUB_TOKEN}',
-                       'Accept': 'application/vnd.github.v3+json'}
-    # Create our issue
-    issue = {'title': title,
-             'body': body,
-             'labels': labels}
-    # Add the issue to our repository
-    r = session.post(url, json=issue)
-    if r.status_code == 201:
-        print('Successfully created Issue {0:s}'.format(title))
-    else:
-        print('Could not create Issue {0:s}'.format(title))
-        print('Response:', r.content)
+# Create a GitHub instance using the token
+g = Github(token)
 
-# Example usage
-make_github_issue('Test Issue', 'This is a test issue created using a token.')
+# Get the repository
+repo = g.get_repo(f"{repo_owner}/{repo_name}")
+
+# Create an issue
+issue_title = "Found a bug"
+issue_body = "I'm having a problem with this."
+assignees = ["octocat"]
+milestone = None  # Replace with the milestone number if needed
+labels = ["bug"]
+
+# Create the issue
+issue = repo.create_issue(title=issue_title, body=issue_body, assignees=assignees, milestone=milestone, labels=labels)
+
+print(f"Issue created successfully! Issue Number: {issue.number}")
