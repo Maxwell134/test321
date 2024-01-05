@@ -9,6 +9,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: Pip install 
+        run: pip3 install github      
                     
       - name: Get Collaborators
         run: python3 -u ${{ github.workspace }}/.github/workflows/tom.py
