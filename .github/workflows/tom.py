@@ -7,7 +7,7 @@ import json
 github_token = os.environ.get('GITHUB_TOKEN')
 repo_owner = "Maxwell134"
 repo_name = "test321"
-pr_number = os.environ.get('GITHUB_EVENT_PATH')  # Use GitHub event payload to get PR number
+# pr_number = os.environ.get('GITHUB_EVENT_PATH')  # Use GitHub event payload to get PR number
 # pr_number = json.load(open(pr_number))['number']
 
 # Create approval issue
