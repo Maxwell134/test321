@@ -17,6 +17,6 @@ jobs:
       - name: Get Collaborators
         run: python3 -u ${{ github.workspace }}/.github/workflows/tom.py
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
         
          
