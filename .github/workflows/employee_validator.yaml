@@ -1,8 +1,8 @@
 name: Check Employee
 
 on:
-  # workflow_dispatch:
-  workflow_call:
+  workflow_dispatch:
+  # workflow_call:
     inputs:
       emp_name:
         description: 'Employee name to check'
