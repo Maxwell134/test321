@@ -2,7 +2,7 @@ import os
 from github import Github
 
 # Replace 'YOUR-TOKEN' with your GitHub personal access token
-token = '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'
+token = ''
 repo_owner = "Maxwell134"
 repo_name = "test321"
 
