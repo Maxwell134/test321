@@ -1,5 +1,4 @@
 import os
-
 from github import Github
 
 # Replace 'YOUR-TOKEN' with your GitHub personal access token
@@ -17,10 +16,9 @@ repo = g.get_repo(f"{repo_owner}/{repo_name}")
 issue_title = "Found a bug"
 issue_body = "I'm having a problem with this."
 assignees = ["octocat"]
-milestone = None  # Replace with the milestone number if needed
 labels = ["bug"]
 
-# Create the issue
-issue = repo.create_issue(title=issue_title, body=issue_body, assignees=assignees, milestone=milestone, labels=labels)
+# Create the issue without the milestone parameter
+issue = repo.create_issue(title=issue_title, body=issue_body, assignees=assignees, labels=labels)
 
 print(f"Issue created successfully! Issue Number: {issue.number}")
