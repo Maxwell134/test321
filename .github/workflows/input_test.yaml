@@ -1,0 +1,65 @@
+name: Check Employee
+
+on:
+  workflow_dispatch:
+    inputs:
+      emp_name:
+        description: 'Employee name to check'
+        required: true
+        type: string
+
+jobs:
+  check_employee:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+  
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Create GitHub issue
+        id: create_issue
+        run: |
+          ISSUE_BODY="Please choose 'yes' or 'no' to proceed with the employee check."
+          echo "::set-output name=issue_number::$(gh issue create --title 'Proceed or Abort?' --body \"$ISSUE_BODY\" --labels 'workflow')"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Wait for user input
+        id: wait_for_input
+        run: echo "Waiting for user input..."
+        timeout-minutes: 10  # Adjust the timeout as needed
+
+      - name: Check issue comments
+        id: check_issue_comments
+        run: echo "::set-output name=comments::$(gh issue list-comments ${{ steps.create_issue.outputs.issue_number }} --json body -q '.[].body')"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Process user input
+        id: process_input
+        run: |
+          USER_INPUT=$(echo "$COMMENTS" | grep -oP '(?<=::set-output name=issue_number::)[^\s]+')
+          if [ "$USER_INPUT" == 'yes' ]; then
+            echo "Proceeding with the job..."
+            echo "::set-output name=proceed::true"
+          elif [ "$USER_INPUT" == 'no' ]; then
+            echo "Aborting the job..."
+            echo "::set-output name=proceed::false"
+          else
+            echo "Invalid input. Exiting."
+            echo "::set-output name=proceed::false"
+          fi
+        env:
+          COMMENTS: ${{ steps.check_issue_comments.outputs.comments }}
+
+      - name: Print result
+        run: |
+          PROCEED="${{ steps.process_input.outputs.proceed }}"
+          echo "Proceed: $PROCEED"
+          if [ "$PROCEED" == 'true' ]; then
+            echo "Success! Continue with additional actions."
+          else
+            echo "Job aborted. Exiting."
+            exit 1
+          fi
