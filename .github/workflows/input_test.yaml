@@ -35,6 +35,25 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
           username: ${{ github.event.inputs.username }}
           repo: ${{ github.event.inputs.repo }}
+
+      - name: Check User Input
+        run: |
+          commentBody=$(jq -r .comment.body "${GITHUB_EVENT_PATH}" | tr '[:upper:]' '[:lower:]')
+          if [[ $commentBody == *"yes"* ]]; then
+            echo "User approved. Proceeding to the next step."
+            # Add your logic for the next step here
+
+            # Optionally, close the issue
+            gh issue close ${{ github.event.issue.number }}
+          elif [[ $commentBody == *"no"* ]]; then
+            echo "User did not approve. Exiting workflow."
+            exit 1
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
+      - name: Next Steps
+        if: success()
+        run: echo "Successful"
         
          
