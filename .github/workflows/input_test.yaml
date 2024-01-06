@@ -9,7 +9,7 @@ on:
         required: true
 
       Repositoryname:
-        description: repo name
+        description: repo 
         type: string
         required: true
 
