@@ -3,8 +3,8 @@ import json
 import os
 
 token = os.getenv('GITHUB_TOKEN')
-username = 'Maxwell134'
-Repositoryname = 'test321'
+username = os.getenv('username')
+Repositoryname = os.getenv('Repositoryname')
 
 """
 Step 1:
