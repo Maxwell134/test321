@@ -13,10 +13,10 @@ on:
         type: string
         required: true
 
-      # issue_name:
-      #   type: string
-      #   required: true
-        
+  schedule:
+    - cron: '*/10 * * * *'  # Run every 10 minutes
+    # You can adjust the cron expression based on your needs
+
 jobs:
   get-collaborators:
     runs-on: ubuntu-latest
@@ -27,7 +27,6 @@ jobs:
 
       - name: Pip install 
         run: pip3 install requests
-
                     
       - name: Get Collaborators
         run: python3 -u ${{ github.workspace }}/.github/workflows/tom.py
@@ -42,7 +41,6 @@ jobs:
           if [[ $commentBody == *"yes"* ]]; then
             echo "User approved. Proceeding to the next step."
             # Add your logic for the next step here
-
             # Optionally, close the issue
             gh issue close ${{ github.event.issue.number }}
           elif [[ $commentBody == *"no"* ]]; then
@@ -55,5 +53,3 @@ jobs:
       - name: Next Steps
         if: success()
         run: echo "Successful"
-        
-         
