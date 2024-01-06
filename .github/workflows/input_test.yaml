@@ -34,7 +34,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
           username: ${{ github.event.inputs.username }}
           repo: ${{ github.event.inputs.repo }}
-          
+
+      - name: Wait for 5 minutes
+        run: sleep 180 
+
+        
       - name: Check if comment contains specific text
         uses: actions/github-script@v6
         with:
@@ -58,10 +62,6 @@ jobs:
             } else {
               console.log("No comment object found in the payload.");
             }
-
-     
-      - name: Wait for 5 minutes
-        run: sleep 300  
         
       - name: Next Steps
         if: github.event.comment.body == 'yes' && github.event.issue.state == 'closed'
