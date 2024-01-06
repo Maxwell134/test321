@@ -13,9 +13,6 @@ on:
         type: string
         required: true
 
-  schedule:
-    - cron: '*/10 * * * *'  # Run every 10 minutes
-    # You can adjust the cron expression based on your needs
 
 jobs:
   get-collaborators:
@@ -29,27 +26,35 @@ jobs:
         run: pip3 install requests
                     
       - name: Get Collaborators
-        run: python3 -u ${{ github.workspace }}/.github/workflows/tom.py
+        run: |
+        
+          python3 -u ${{ github.workspace }}/.github/workflows/tom.py
+          
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
           username: ${{ github.event.inputs.username }}
           repo: ${{ github.event.inputs.repo }}
-
-      - name: Check User Input
-        run: |
-          commentBody=$(jq -r .comment.body "${GITHUB_EVENT_PATH}" | tr '[:upper:]' '[:lower:]')
-          if [[ $commentBody == *"yes"* ]]; then
-            echo "User approved. Proceeding to the next step."
-            # Add your logic for the next step here
-            # Optionally, close the issue
-            gh issue close ${{ github.event.issue.number }}
-          elif [[ $commentBody == *"no"* ]]; then
-            echo "User did not approve. Exiting workflow."
-            exit 1
-          fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
+      - name: Check if comment contains specific text
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const commentBody = context.payload.comment.body.toLowerCase();
+            const shouldCloseIssue = commentBody.includes('yes'); // Change this to the specific text you are looking for
+  
+            if (shouldCloseIssue) {
+              github.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                state: 'closed'
+              });
+            }
+     
+      - name: Wait for 5 minutes
+        run: sleep 300  
+        
       - name: Next Steps
-        if: success()
+        if: github.event.comment.body == 'yes' && github.event.issue.state == 'closed'
         run: echo "Successful"
