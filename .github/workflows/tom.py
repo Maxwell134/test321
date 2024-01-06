@@ -7,7 +7,7 @@ token = os.getenv('GITHUB_TOKEN')
 username = os.getenv('username')
 Repositoryname = os.getenv('Repositoryname')
 
-number = os.getenv('issue_number')
+number = os.getenv('issue_name')
 """
 Step 1:
 Create contents for the issue you want to post
