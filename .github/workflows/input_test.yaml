@@ -8,8 +8,8 @@ on:
         type: string
         required: true
 
-      Repositoryname:
-        description: repo 
+      repo:
+        description: repository name
         type: string
         required: true
 
