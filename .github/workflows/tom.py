@@ -4,10 +4,9 @@ import json
 import os
 
 token = os.getenv('GITHUB_TOKEN')
-username = os.getenv('username')
-Repositoryname = os.getenv('Repositoryname')
-
-number = os.getenv('issue_name')
+username = 'Maxwell134'
+Repositoryname = 'test321'
+number = 16
 """
 Step 1:
 Create contents for the issue you want to post
