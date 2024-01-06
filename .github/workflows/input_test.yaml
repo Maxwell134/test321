@@ -13,9 +13,9 @@ on:
         type: string
         required: true
 
-      issue_name:
-        type: string
-        required: true
+      # issue_name:
+      #   type: string
+      #   required: true
         
 jobs:
   get-collaborators:
