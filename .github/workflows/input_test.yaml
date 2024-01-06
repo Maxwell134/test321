@@ -1,7 +1,22 @@
 name: tom
+
 on:
   workflow_dispatch:
+    inputs:
+      username: 
+        description: username
+        type: string
+        required: true
 
+      Repositoryname:
+        description: repo name
+        type: string
+        required: true
+
+      issue_name:
+        type: string
+        required: true
+        
 jobs:
   get-collaborators:
     runs-on: ubuntu-latest
@@ -11,12 +26,13 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Pip install 
-        run: pip3 install PyGithub
+        run: pip3 install requests
 
                     
       - name: Get Collaborators
         run: python3 -u ${{ github.workspace }}/.github/workflows/tom.py
         env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
         
          
