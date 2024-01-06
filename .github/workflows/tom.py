@@ -3,7 +3,7 @@ import requests
 import json
 import os
 
-token = os.getenv('GITHUB_TOKEN')
+token = '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'
 username = 'Maxwell134'
 Repositoryname = 'test321'
 number = 16
