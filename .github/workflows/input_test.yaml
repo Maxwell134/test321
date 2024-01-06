@@ -33,6 +33,8 @@ jobs:
         run: python3 -u ${{ github.workspace }}/.github/workflows/tom.py
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          username: ${{ github.event.inputs.username }}
+          repo: ${{ github.event.inputs.repo }}
           
         
          
