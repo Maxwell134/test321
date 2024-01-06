@@ -40,17 +40,25 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const commentBody = context.payload.comment.body.toLowerCase();
-            const shouldCloseIssue = commentBody.includes('yes'); // Change this to the specific text you are looking for
   
-            if (shouldCloseIssue) {
-              github.issues.update({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: context.issue.number,
-                state: 'closed'
-              });
+            const comment = context.payload.comment;
+
+            if (comment) {
+              const commentBody = comment.body.toLowerCase();
+              const shouldCloseIssue = commentBody.includes('yes'); // Change this to the specific text you are looking for
+            
+              if (shouldCloseIssue) {
+                github.issues.update({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: context.issue.number,
+                  state: 'closed'
+                });
+              }
+            } else {
+              console.log("No comment object found in the payload.");
             }
+
      
       - name: Wait for 5 minutes
         run: sleep 300  
