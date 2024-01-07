@@ -10,6 +10,12 @@ inputs:
         description: repository name
         type: string
         required: true
+
+      issue_number:
+        description: issue
+        type: string
+        required: true
+      
 runs:
   using: 'composite'
   steps:
