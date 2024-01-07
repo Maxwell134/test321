@@ -1,8 +1,9 @@
 name: Birthday Wishes2
 
 on:
-  schedule:
-    - cron: '*/2 * * * *'  # Adjust the cron schedule as needed
+  workflow_dispatch
+  # schedule:
+  #   - cron: '*/2 * * * *'  # Adjust the cron schedule as needed
 
 jobs:
   send_birthday_wishes:
