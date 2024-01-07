@@ -26,7 +26,7 @@ jobs:
         run: pip3 install requests
 
       - name: new action 
-        uses:  Maxwell134/test321.github/actions/tom@main
+        uses:  Maxwell134/test321/.github/actions/tom@main
         with:
         
            GITHUB_TOKEN: ${{ secrets.TOKEN }}
