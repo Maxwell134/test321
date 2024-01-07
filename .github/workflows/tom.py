@@ -34,7 +34,7 @@ requests.post(url, data=json.dumps(data), headers=headers)
 issue = f'https://github.com/{username}/{Repositoryname}/issues/{issue_number}'
 os.popen(f'echo {issue}')
 
-time.sleep(180)
+# time.sleep(180)
 
 comment_url = f'https://api.github.com/repos/{username}/{Repositoryname}/issues/{issue_number}/comments'
 headers = {'Authorization': f'token {token}'}
