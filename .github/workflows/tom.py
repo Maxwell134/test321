@@ -33,24 +33,24 @@ requests.post(url, data=json.dumps(data), headers=headers)
 
 print(f'https://github.com/{username}/{Repositoryname}/issues/{issue_number}')
 
-time.sleep(60)
+# time.sleep(60)
 
-comment_url = f'https://api.github.com/repos/{username}/{Repositoryname}/issues/{issue_number}/comments'
-headers = {'Authorization': f'token {token}'}
+# comment_url = f'https://api.github.com/repos/{username}/{Repositoryname}/issues/{issue_number}/comments'
+# headers = {'Authorization': f'token {token}'}
 
-# Get comments on the issue
-comments = requests.get(comment_url, headers=headers)
+# # Get comments on the issue
+# comments = requests.get(comment_url, headers=headers)
 
-comment = any('yes' in comment['body']for comment in comments.json())
+# comment = any('yes' in comment['body']for comment in comments.json())
 
-print(comment)
-close_url = f'https://api.github.com/repos/{username}/{Repositoryname}/issues/{issue_number}'
-headers = {'Authorization': f'token {token}'}
+# print(comment)
+# close_url = f'https://api.github.com/repos/{username}/{Repositoryname}/issues/{issue_number}'
+# headers = {'Authorization': f'token {token}'}
 
-if comment:
-    response = requests.patch(close_url, headers=headers, json={'state': 'closed'})
-    print(response.json()['state'])
+# if comment:
+#     response = requests.patch(close_url, headers=headers, json={'state': 'closed'})
+#     print(response.json()['state'])
 
-else:
-    print('sorry')
+# else:
+#     print('sorry')
 
