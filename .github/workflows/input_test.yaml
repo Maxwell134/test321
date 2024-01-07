@@ -26,6 +26,7 @@ jobs:
         run: pip3 install requests
                     
       - name: Get Collaborators
+        id: checker
         run: |
         
           python3 -u ${{ github.workspace }}/.github/workflows/tom.py
@@ -39,5 +40,5 @@ jobs:
         run: sleep 120   
         
       - name: Next Steps
-        if: github.event.comment.body == 'yes' && github.event.issue.state == 'closed'
+        if: success()
         run: echo "Successful"
