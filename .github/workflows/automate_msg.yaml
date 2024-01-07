@@ -20,7 +20,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install requests
-          pip install csv 
+          pip install python-csv
 
       - name: Run Quotes 
         env:
