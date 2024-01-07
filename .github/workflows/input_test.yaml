@@ -36,32 +36,7 @@ jobs:
           repo: ${{ github.event.inputs.repo }}
 
       - name: Wait for 5 minutes
-        run: sleep 180 
-
-        
-      - name: Check if comment contains specific text
-        uses: actions/github-script@v6
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-  
-            const comment = context.payload.comment;
-
-            if (comment) {
-              const commentBody = comment.body.toLowerCase();
-              const shouldCloseIssue = commentBody.includes('yes'); // Change this to the specific text you are looking for
-            
-              if (shouldCloseIssue) {
-                github.issues.update({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  issue_number: context.issue.number,
-                  state: 'closed'
-                });
-              }
-            } else {
-              console.log("No comment object found in the payload.");
-            }
+        run: sleep 120   
         
       - name: Next Steps
         if: github.event.comment.body == 'yes' && github.event.issue.state == 'closed'
