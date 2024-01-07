@@ -2,6 +2,7 @@ import json
 import os
 import requests
 from random import randint
+import time
 
 token = os.getenv('GITHUB_TOKEN')
 username = os.environ.get('username')
