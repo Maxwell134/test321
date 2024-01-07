@@ -2,7 +2,7 @@ name: Birthday Wishes2
 
 on:
   schedule:  
-     - cron: '05 23 * * 0-6'  # Adjust the cron schedule as needed
+     - cron: '10 23 * * 0-0'  # Adjust the cron schedule as needed
 
 jobs:
   send_birthday_wishes:
