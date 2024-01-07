@@ -20,7 +20,8 @@ jobs:
       - name: Install dependencies
         run: |
           pip install requests
-          pip install python-csv
+          pip install pandas
+
 
       - name: Run Quotes 
         env:
