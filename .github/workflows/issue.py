@@ -6,6 +6,7 @@ import requests
 token = os.getenv('GITHUB_TOKEN')
 username = os.environ.get('username')
 Repositoryname = os.environ.get('repo')
+issue_number = os.environ.get('issue_number')
 
 comment_url = f'https://api.github.com/repos/{username}/{Repositoryname}/issues/{issue_number}/comments'
 headers = {'Authorization': f'token {token}'}
