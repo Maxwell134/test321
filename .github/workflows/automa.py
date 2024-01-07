@@ -7,7 +7,7 @@ import requests
 
 def send_message():
 
-    token = os.getenv('credentials)
+    token = os.getenv('credentials')
     quotes = []
     with open('Quotes.csv', 'r', newline='') as reader:
         lines = csv.DictReader(reader)
