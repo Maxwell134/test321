@@ -1,0 +1,28 @@
+name: Birthday Wishes
+
+on:
+  schedule:
+    - cron: '0 12 * * *'  # Adjust the cron schedule as needed
+
+jobs:
+  send_birthday_wishes:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.x
+
+      - name: Install dependencies
+        run: |
+          pip install requests
+
+      - name: Run Quotes 
+        env:
+          credentials : ${{ secrets.credentials }}
+         
+        run: python -u ${{ github.workspace }}/.github/workflows/automa.py
