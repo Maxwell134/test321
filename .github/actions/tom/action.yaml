@@ -17,5 +17,5 @@ runs:
       uses: actions/checkout@v3
 
     - name: Run action
-      run: python3 -u ${{ github.workspace }}/.github/workflows/tom.py
+      run: python3 -u Maxwell134/test321/.github/workflows/tom.py
       shell: bash
