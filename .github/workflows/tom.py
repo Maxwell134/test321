@@ -7,7 +7,7 @@ import time
 token = os.getenv('GITHUB_TOKEN')
 username = os.environ.get('username')
 Repositoryname = os.environ.get('repo')
-issue_number = randint(1,20)
+issue_number = os.environ.get('issue_number')
 
 """
 Step 1:
