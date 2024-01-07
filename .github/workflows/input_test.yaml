@@ -62,7 +62,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
           username: ${{ github.event.inputs.username }}
-          repo: ${{ github.event.inputs.repo }}       
+          repo: ${{ github.event.inputs.repo }}  
+          issue_number: ${{ github.event.inputs.issue_number }}
         
       - name: Next Steps
         if: success()
