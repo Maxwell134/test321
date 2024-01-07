@@ -24,20 +24,29 @@ jobs:
 
       - name: Pip install 
         run: pip3 install requests
-                    
-      - name: Get Collaborators
-        id: checker
-        run: |
+
+      - name: new action 
+        uses:  Maxwell134/test321.github/actions/tom@main
+        with:
         
-          python3 -u ${{ github.workspace }}/.github/workflows/tom.py
+           GITHUB_TOKEN: ${{ secrets.TOKEN }}
+           username: ${{ github.event.inputs.username }}
+           repo: ${{ github.event.inputs.repo }}
+                  
+                    
+      # - name: Get Collaborators
+      #   id: checker
+      #   run: |
+        
+      #     python3 -u ${{ github.workspace }}/.github/workflows/tom.py
           
-        env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
-          username: ${{ github.event.inputs.username }}
-          repo: ${{ github.event.inputs.repo }}
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.TOKEN }}
+      #     username: ${{ github.event.inputs.username }}
+      #     repo: ${{ github.event.inputs.repo }}
 
       - name: Wait for 5 minutes
-        run: sleep 120   
+        run: sleep 60  
         
       - name: Next Steps
         if: success()
