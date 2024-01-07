@@ -45,8 +45,19 @@ jobs:
       #     username: ${{ github.event.inputs.username }}
       #     repo: ${{ github.event.inputs.repo }}
 
-      - name: Wait for 5 minutes
-        run: sleep 60  
+      - name: Wait for 2 minutes
+        run: sleep 120
+
+      - name: Get Collaborators
+        id: checker
+        run: |
+        
+          python3 -u ${{ github.workspace }}/.github/workflows/issue.py
+          
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          username: ${{ github.event.inputs.username }}
+          repo: ${{ github.event.inputs.repo }}       
         
       - name: Next Steps
         if: success()
