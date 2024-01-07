@@ -1,0 +1,21 @@
+name: 'tom-action'
+description: 'Get Collaborators'
+inputs:
+      username: 
+        description: username
+        type: string
+        required: true
+
+      repo:
+        description: repository name
+        type: string
+        required: true
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Run action
+      run: python3 -u ${{ github.workspace }}/.github/workflows/tom.py
+      shell: bash
