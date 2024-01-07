@@ -9,7 +9,7 @@ def send_message():
 
     token = os.getenv('credentials')
     quotes = []
-    with open('Quotes.csv', 'r', newline='') as reader:
+    with open('.github/workflows/Quotes.csv', 'r', newline='') as reader:
         lines = csv.DictReader(reader)
 
         for line in lines:
