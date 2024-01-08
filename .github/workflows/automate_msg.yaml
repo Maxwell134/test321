@@ -1,9 +1,9 @@
 name: Birthday Wishes2
 
 on:
-    # workflow_dispatch
-   schedule:  
-     - cron: '5 1 * * 1-5'  # Adjust the cron schedule as needed
+    workflow_dispatch
+   # schedule:  
+   #   - cron: '5 1 * * 1-5'  # Adjust the cron schedule as needed
 
 jobs:
   send_birthday_wishes:
@@ -22,6 +22,9 @@ jobs:
         run: |
           pip install requests
           pip install pandas
+          pip install time 
+          date +"%T"
+
 
 
       - name: Run Quotes 
