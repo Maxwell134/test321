@@ -25,11 +25,10 @@ Generate your target repository's URL using Github API
 """
 url = f"https://api.github.com/repos/{username}/{Repositoryname}/issues/{issue_number}"
 
-"""
-"""
-Step3:
-Delete exisitng comments if exist 
-"""
+
+# Step3 :
+# Delete exisitng comments if exist 
+
 comments_url = f'https://api.github.com/repos/{username}/{Repositoryname}/issues/{issue_number}/comments'
 comments_response = requests.get(comments_url, headers=headers)
 
@@ -44,9 +43,9 @@ if comments_response.status_code == 200:
         else:
             print(f"Failed to delete comment with ID {comment_id}. Status code: {delete_comment_response.status_code}")
 
-Step 4:
-Post your issue message using requests and json
-"""
+# Step 4:
+# Post your issue message using requests and json
+
 requests.post(url, data=json.dumps(data), headers=headers)
 response = requests.get(url, data = json.dumps(data),headers=headers)
 
