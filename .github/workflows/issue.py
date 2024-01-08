@@ -20,8 +20,10 @@ print(comment)
 close_url = f'https://api.github.com/repos/{username}/{Repositoryname}/issues/{issue_number}'
 headers = {'Authorization': f'token {token}'}
 
+response = requests.patch(close_url, headers=headers, json={'state': 'closed'})
+
 if comment:
-    response = requests.patch(close_url, headers=headers, json={'state': 'closed'})
+    # response = requests.patch(close_url, headers=headers, json={'state': 'closed'})
     print(response.json()['state'])
     print("::set-output name=comment_result::true")
 
