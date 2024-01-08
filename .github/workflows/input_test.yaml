@@ -54,7 +54,7 @@ jobs:
         run: sleep 120
 
       - name: Get Collaborators
-        id: checker
+        id: comment_result
         run: |
         
           python3 -u ${{ github.workspace }}/.github/workflows/issue.py
@@ -66,5 +66,5 @@ jobs:
           issue_number: ${{ github.event.inputs.issue_number }}
         
       - name: Next Steps
-        if: success()
+        if: steps.comment_result.outputs.comment_result == 'true'
         run: echo "Successful"
