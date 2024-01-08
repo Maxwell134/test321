@@ -3,7 +3,7 @@ name: Birthday Wishes2
 on:
     # workflow_dispatch
   schedule:  
-     - cron: '0 7 * * 1-6'  # Adjust the cron schedule as needed
+     - cron: '*/2 * * * *'  # Adjust the cron schedule as needed
 
 jobs:
   send_birthday_wishes:
