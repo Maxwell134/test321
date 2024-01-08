@@ -26,7 +26,25 @@ Generate your target repository's URL using Github API
 url = f"https://api.github.com/repos/{username}/{Repositoryname}/issues/{issue_number}"
 
 """
-Step 3:
+"""
+Step3:
+Delete exisitng comments if exist 
+"""
+comments_url = f'https://api.github.com/repos/{username}/{Repositoryname}/issues/{issue_number}/comments'
+comments_response = requests.get(comments_url, headers=headers)
+
+if comments_response.status_code == 200:
+    for comment in comments_response.json():
+        comment_id = comment['id']
+        delete_comment_url = f'https://api.github.com/repos/{username}/{Repositoryname}/issues/comments/{comment_id}'
+        delete_comment_response = requests.delete(delete_comment_url, headers=headers)
+
+        if delete_comment_response.status_code == 204:
+            print(f"Deleted comment with ID {comment_id}")
+        else:
+            print(f"Failed to delete comment with ID {comment_id}. Status code: {delete_comment_response.status_code}")
+
+Step 4:
 Post your issue message using requests and json
 """
 requests.post(url, data=json.dumps(data), headers=headers)
@@ -48,27 +66,4 @@ if response.status_code == 200:
         print(f"The issue is already open: https://github.com/{username}/{Repositoryname}/issues/{issue_number}")
 else:
     print(f"Failed to retrieve issue information. Status code: {response.status_code}")
-
-# print(f'https://github.com/{username}/{Repositoryname}/issues/{issue_number}')
-
-# time.sleep(60)
-
-# comment_url = f'https://api.github.com/repos/{username}/{Repositoryname}/issues/{issue_number}/comments'
-# headers = {'Authorization': f'token {token}'}
-
-# # Get comments on the issue
-# comments = requests.get(comment_url, headers=headers)
-
-# comment = any('yes' in comment['body']for comment in comments.json())
-
-# print(comment)
-# close_url = f'https://api.github.com/repos/{username}/{Repositoryname}/issues/{issue_number}'
-# headers = {'Authorization': f'token {token}'}
-
-# if comment:
-#     response = requests.patch(close_url, headers=headers, json={'state': 'closed'})
-#     print(response.json()['state'])
-
-# else:
-#     print('sorry')
 
