@@ -23,6 +23,8 @@ headers = {'Authorization': f'token {token}'}
 if comment:
     response = requests.patch(close_url, headers=headers, json={'state': 'closed'})
     print(response.json()['state'])
+    print("::set-output name=comment_result::true")
 
 else:
     print('sorry')
+    print("::set-output name=comment_result::false")
