@@ -24,7 +24,7 @@ def send_message():
         for line in lines:
            quotes.append(line['Quotes'])
 
-    message = random.choice(quotes)
+    message = choice(quotes)
     
 
 
