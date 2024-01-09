@@ -5,7 +5,7 @@ import time
 
 import requests
 
-messanger = .github/workflows/wish.txt'
+messanger = '.github/workflows/wish.txt'
 
 def new_year(messanger):   
     
