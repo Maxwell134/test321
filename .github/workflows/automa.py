@@ -1,6 +1,6 @@
 import os
 import csv
-import random
+from random import choice 
 import time
 
 import requests
