@@ -8,12 +8,11 @@ import requests
 messanger = '.github/workflows/wish.txt'
 
 def new_year(messanger):   
-    
-      with open(messanger, mode='r') as fd:
-      lines = fd.readlines()
-      line =  [line.strip() for line in lines]
-      sentence = choice(line)
-      return sentence     
+      with open(messanger, mode='r') as fd:          
+          lines = fd.readlines()
+          line =  [line.strip() for line in lines]
+          sentence = choice(line)
+          return sentence     
 
 def send_message():
 
