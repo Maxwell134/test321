@@ -5,6 +5,16 @@ import time
 
 import requests
 
+messanger = .github/workflows/wish.txt'
+
+def new_year(messanger):   
+    
+      with open(messanger, mode='r') as fd:
+      lines = fd.readlines()
+      line =  [line.strip() for line in lines]
+      sentence = choice(line)
+      return sentence     
+
 def send_message():
 
     token = os.getenv('credentials')
@@ -16,13 +26,17 @@ def send_message():
            quotes.append(line['Quotes'])
 
     message = random.choice(quotes)
+    
+
 
     url = os.getenv('url')
     chatId = os.getenv('chatId')
 
     payload = {
         "chatId": chatId,
-        "message": message
+        "mediaUrl": new_year(messanger),
+        "mediaCaption": message,
+        "mediaName": "james.png"
     }
     headers = {
         "accept": "application/json",
@@ -31,6 +45,12 @@ def send_message():
     }
 
     response = requests.post(url, json=payload, headers=headers)
+    if response.status_code == 200:
+        
+        print('successful')
+    else:
+        
+        print('failed')
 
     # print(response.text)
 
